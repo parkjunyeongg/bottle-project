@@ -7,6 +7,7 @@ return(
         <div className="barmenu">
             <button type="submit" > 메뉴1 </button> 
             <button type="submit" > 메뉴2 </button> 
+            <button type="submit" > 메뉴3 </button> 
         </div>
     </div>
     );

@@ -24,11 +24,12 @@
     font-size: 1.5em;
 }
 
-button {
+.barmenu > button {
     padding-left: 50px;
     border: none;
-    display: inline-flex;
-    height: 3em;
+    
+    height: 5em;
+    width: 150px;
 }
 
 button:hover {
