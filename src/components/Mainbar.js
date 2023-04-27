@@ -2,6 +2,7 @@ import '../../src/css/Mainbar.css';
 const main =() => {
 
 return(
+    <>
     <div className="upbar">
         <p className="logogo">Bottle-project</p>
         <div className="barmenu">
@@ -10,6 +11,7 @@ return(
             <button type="submit" > database </button> 
         </div>
     </div>
+    </>
     );
 }
             
