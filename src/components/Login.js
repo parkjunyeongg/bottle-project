@@ -1,6 +1,6 @@
 import '../../src/css/Login.css';
-import { StyledSell } from '../../src/css/Login.css';
-import styled, { keyFrames } from 'styled-components';
+
+
 import { useState } from "react";
 
 const Login = () => {
@@ -12,26 +12,6 @@ const Login = () => {
         setInfo(true);
     }
 
-    const animation = keyFrames`
-     0% {
-        transform:rotate(0deg);
-        border-radius:0px;
-    }
-    50% {
-        border-radius:100px;
-    }
-    100%{
-        transform:rotate(360deg);
-        border-radius:0px;
-    }
-    `;
-
-const Box = styled.div`
-    height: 200px;
-    width: 200px;
-    background-color: tomato;
-    animation:${animation} 1s linear infinite; //1초동안 선형 무한 속성값주기
-    `;
 
 return(
     <>
@@ -76,9 +56,7 @@ return(
         </form>
 
         
-        <Box>
-            <span>☺️</span> 
-        </Box>
+        
         
     </>
     );
