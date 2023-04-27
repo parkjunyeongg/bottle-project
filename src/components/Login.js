@@ -5,17 +5,23 @@ import { useState } from "react";
 
 const Login = () => {
    
-    const [isInfo, setInfo] = useState(false);
-    //const [inup, setinup] = useState("");
+    const [isInfo, setInfo] = useState(false); // 회원가입 버튼 누름 확인
+    const [isFormSize, setFormSize] =useState(350); //회원가입 버튼 누름시 창 확장
 
     const startSignUp = () => {
-        setInfo(true);
+        setInfo(true); //회원가입 버튼을 누르면 true
+        if (isFormSize === 350) {
+            setFormSize(isFormSize + 150); //회원가입 버튼 누르면 sign의 form크기 150 확장
+        } else if (isFormSize === 500) {
+            setFormSize(isFormSize - 150); // 회원가입 취소시 sign의 form크기 150 줄어듬
+        }
     }
+
 
 
 return(
     <>
-        <form className = "sign">
+        <form className = "sign" style={{height: `${isFormSize}px`}}>
             {!isInfo && (<h3>Sign In</h3>)}
             {isInfo && (<h3>Sign Up</h3>)}
             {isInfo && (<div className="idpwd">
@@ -47,16 +53,14 @@ return(
                 {isInfo && (<button type="submit" onClick={startSignUp}> 가입 </button>)}
             </div>
             <div className="signup">
-                {!isInfo && (<button type="submit" id = "sgup" onClick={startSignUp} StyledSell isInfo={isInfo}> 회원가입 </button>
+                {!isInfo && (<button type="submit" id = "sgup" onClick={startSignUp} > 회원가입 </button>
                 )}
-                {isInfo && (<button type="submit"  onClick={startSignUp} StyledSell isInfo={isInfo}> 취소 </button>
+                {isInfo && (<button type="submit"  onClick={startSignUp} > 취소 </button>
                 )}
             </div>
             
         </form>
 
-        
-        
         
     </>
     );
