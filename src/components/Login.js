@@ -1,8 +1,14 @@
 import '../../src/css/Login.css';
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const movePage = useNavigate();
    
+    const goImg = () =>  {
+        movePage('/Imgupload');
+      }
+
     const [isInfo, setInfo] = useState(false); // 회원가입 버튼 누름 확인
     const [isFormSize, setFormSize] =useState(350); //회원가입 버튼 누름시 창 확장
 
@@ -35,7 +41,7 @@ const Login = () => {
         }];
         console.log(logininfomation)
         
-        
+        goImg()
     }
 
 return(
