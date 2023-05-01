@@ -1,24 +1,30 @@
 import '../../src/css/Imgupload.css';
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const Imgupload = () => {
+    const [imgFile, setImgFile] = useState("");
     const imgInput = useRef(); 
 
     const handleButtonClick = (e) => {
         imgInput.current.click();
     }
-
-    const handleChange = (e) => {
-        console.log(e.target.files[0]);
+    
+    const saveImgFile = () => {
+        const file = imgInput.current.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setImgFile(reader.result);
+           };
     };
-  
 
 return(
     <>
         <form className="imgup">
             <h3>bottle identification system </h3>
             <div className="imgspace">
-                <input type="file" ref={imgInput} onChange={handleChange} style={{display: "none"}} />
+            <img src={ imgFile } alt="병 이미지"/>
+            <input type="file" ref={imgInput} onChange={saveImgFile} style={{display: "none"}} />
 
             </div>
             <div className="imgbutton">

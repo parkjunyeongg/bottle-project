@@ -6,14 +6,22 @@ const Login = () => {
     const movePage = useNavigate();
    
     const goImg = () =>  {
-        movePage('/Imgupload');
+        movePage('/imgupload');
       }
 
     const [isInfo, setInfo] = useState(false); // 회원가입 버튼 누름 확인
-    const [isFormSize, setFormSize] =useState(350); //회원가입 버튼 누름시 창 확장
+    const [isFormSize, setFormSize] =useState(370); //회원가입 버튼 누름시 창 확장
 
     const [inputId, setInputId] = useState('')
     const [inputPw, setInputPw] = useState('')
+
+    const [newName, setNewName] = useState('')
+    const [newEmail, setNewEmail] = useState('')
+    const [newId, setNewId] = useState('')
+    const [newPw, setNewPw] = useState('')
+    
+    const [idError,setIdError] = useState(false)
+    const [pwError,setPwError] = useState(false)
 
     const handleInputId = (e) => {
         setInputId(e.target.value)
@@ -23,10 +31,23 @@ const Login = () => {
         setInputPw(e.target.value)
     }
 
+    const handleNewName = (e) => {
+        setNewName(e.target.value)
+    }
+    const handleNewEmail = (e) => {
+        setNewEmail(e.target.value)
+    }
+    const handleNewId = (e) => {
+        setNewId(e.target.value)
+    }
+    const handleNewPw = (e) => {
+        setNewPw(e.target.value)
+    }
+
     const startSignUp = () => {
         setInfo(true); //회원가입 버튼을 누르면 true
 
-        if (isFormSize === 350) {
+        if (isFormSize === 370) {
             setFormSize(500); //회원가입 버튼 누르면 sign의 form크기 150 확장
         } else if (isFormSize === 500) {
             setFormSize(350); // 회원가입 취소시 sign의 form크기 150 줄어듬
@@ -39,9 +60,32 @@ const Login = () => {
             ID:inputId,
             Passward:inputPw
         }];
-        console.log(logininfomation)
         
-        goImg()
+        if (inputId === ""){
+            //setIdError(true)
+            alert("아이디를 입력해 주세요.")
+        }
+        else if (inputPw === ""){
+            //setPwError(true)
+            alert("비밀번호를 입력해 주세요.")
+        } else {
+            console.log(logininfomation)
+            goImg()
+        }
+        
+    }
+
+    const onClickSignup =() => {
+
+        const signupinfomation = [{
+            Name:newName,
+            Email:newEmail,
+            ID:newId,
+            Passward:newPw
+        }];
+
+        console.log(signupinfomation)
+        alert("회원가입이 완료되었습니다.")
     }
 
 return(
@@ -53,22 +97,22 @@ return(
             {isInfo && (<div className="idpwd">
                 <div className="name">
                     <label> Name </label>
-                    <input type="text" id = "name" placeholder="Enter Name"/> 
+                    <input type="text" id = "name" value={newName} onChange={handleNewName} placeholder="Enter Name"/> 
                 
                 </div>
                 <div className="email">
                     <label> Email </label>
-                    <input type="text" id = "email" placeholder="Enter Email"/>
+                    <input type="text" id = "email" value={newEmail} onChange={handleNewEmail} placeholder="Enter Email"/>
 
                 </div>
                 <div className="id">
                     <label> ID </label>
-                    <input type="text" id = "newid" placeholder="Enter new ID"/> 
+                    <input type="text" id = "new_id" value={newId} onChange={handleNewId} placeholder="Enter new ID"/> 
                     
                 </div>
                 <div className="pwd">
                     <label> Password </label>
-                    <input type="password" id = "newpwd" placeholder="Enter new password"/>
+                    <input type="password" id = "new_pw" value={newPw} onChange={handleNewPw} placeholder="Enter new password"/>
 
                 </div>
             </div> )}
@@ -85,10 +129,13 @@ return(
 
                 </div>
             </div> )}
-
+            <div className='errorbox'>
+                {idError && (<p>아이디를 입력해 주세요.</p>)}
+                {pwError && (<p>비밀번호를 입력해 주세요.</p>)}
+            </div>
             <div className="but">
                 {!isInfo && (<button type="submit" id = "sub" onClick={onClickLogin}> 로그인 </button> )}
-                {isInfo && (<button type="submit" onClick={startSignUp}> 가입 </button>)}
+                {isInfo && (<button type="submit" onClick={onClickSignup}> 가입 </button>)}
             </div>
 
             <div className="signup">

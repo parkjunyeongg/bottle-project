@@ -1,18 +1,31 @@
 import '../../src/css/Mainbar.css';
-const main =() => {
+import { useNavigate } from 'react-router-dom';
+
+const Mainbar =() => {
+    const movePage = useNavigate();
+   
+    const goImg = () =>  {
+        movePage('/imgupload');
+    }
+
+    const goLogin = () =>  {
+        movePage('/');
+    }
+
+
 
 return(
     <>
     <div className="upbar">
         <p className="logogo">Bottle-project</p>
         <div className="barmenu">
-            <button type="submit" > Login </button> 
-            <button type="submit" > img upload </button> 
-            <button type="submit" > database </button> 
+            <button onClick={goLogin}> Login </button> 
+            <button onClick={goImg}> img upload</button>
+            <button> database </button> 
         </div>
     </div>
     </>
     );
 }
             
-export default main;
+export default Mainbar;
