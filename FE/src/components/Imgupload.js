@@ -5,17 +5,24 @@ const Imgupload = () => {
     const [imgFile, setImgFile] = useState("");
     const imgInput = useRef(); 
 
-    const handleButtonClick = (e) => {
+    const handleButtonClick = () => {
         imgInput.current.click();
-    }
+    };
     
-    const saveImgFile = () => {
-        const file = imgInput.current.files[0];
+    const saveImgFile = (e) => {
+        const file = e.target.files[0];
         const reader = new FileReader();
-        reader.readAsDataURL(file);
+
         reader.onloadend = () => {
             setImgFile(reader.result);
            };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            setImgFile(null);
+        }
+        
     };
 
 return(
@@ -23,8 +30,8 @@ return(
         <form className="imgup">
             <h3>bottle identification system </h3>
             <div className="imgspace">
-            <img src={ imgFile } alt="병 이미지"/>
             <input type="file" ref={imgInput} onChange={saveImgFile} style={{display: "none"}} />
+            {imgFile && (<img src={URL.createObjectURL(imgFile)} alt="병 이미지" style={{ maxWidth: '100%' }} />)}
 
             </div>
             <div className="imgbutton">
