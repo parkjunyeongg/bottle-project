@@ -12,6 +12,9 @@ const Mainbar =() => {
         movePage('/');
     }
 
+    const goData = () => {
+        movePage('/database');
+    }
 
 
 return(
@@ -21,7 +24,7 @@ return(
         <div className="barmenu">
             <button onClick={goLogin}> Login </button> 
             <button onClick={goImg}> img upload</button>
-            <button> database </button> 
+            <button onClick={goData}> database </button> 
         </div>
     </div>
     </>

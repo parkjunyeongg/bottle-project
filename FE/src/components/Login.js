@@ -2,11 +2,14 @@ import '../../src/css/Login.css';
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
+//로컬 "proxy": "http://10.125.121.221:8080",
+//서버 "proxy":"http://kshnx2.iptime.org:8080",
 const Login = () => {
+
+    
+
+
     const movePage = useNavigate();
-    const gohome = () => {
-        movePage('/');
-    }
     const goImg = () =>  {
         movePage('/imgupload');
       }
@@ -56,12 +59,28 @@ const Login = () => {
       const handleSignUpSubmit = (e) => {
         e.preventDefault();
         const { name, email, newid, newpw } = signUpData;
+
         if (!name || !email || !newid || !newpw) {
             alert('모든 정보를 입력해 주세요.');
         } else {
-            console.log(signUpData)
             alert('가입이 완료되었습니다.(임시)')
-            endSignUp()
+
+              fetch("/insertMember", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json;"
+                },
+                body: JSON.stringify(signUpData)
+                })
+                
+                .then((signUpData) => {
+                console.log('성공:', signUpData);
+                })
+                .catch((error) => {
+                console.error('실패:', error);
+                });
+                
+                endSignUp()
         }
       };
 
