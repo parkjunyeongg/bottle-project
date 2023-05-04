@@ -94,13 +94,26 @@ const Login = () => {
                 body: JSON.stringify(signUpData)
                 })
                 .then((signUpData) => {
-                alert('가입이 완료되었습니다.')
-                console.log('성공:', signUpData)
-                endSignUp()
+                    alert('가입이 완료되었습니다.')
+                    console.log('성공:', signUpData)
+                    setSignOpacity(0)
+                    setTimeout(() => {
+                        setInfo(false);
+                        setSignDisplay("none")
+                    }, 350);
+                    setTimeout(() => {
+                        setLoginDisplay("block")
+                        setFormSize(350);
+                    },350)
+                    setTimeout(() =>{
+                        setLoginOpacity(1)
+                        //window.location.reload()
+                    },500)
+                
                 })
                 .catch((error) => {
-                console.error('실패:', error)
-                alert("중복된 아이디입니다.")
+                    console.error('실패:', error)
+                    alert("중복된 아이디입니다.")
                 });
                 
                 
@@ -109,45 +122,38 @@ const Login = () => {
 
 
     const startSignUp = (e) => { //회원가입 버튼 누를시 
+        e.preventDefault();
         setLoginOpacity(0)
         setIdError(false)
         setPwError(false)
-        e.preventDefault();
-        if (isFormSize < 500) {
-            setFormSize(500); //회원가입 버튼 누르면 sign의 form크기 확장
-            setTimeout(() => {                  // 애니메이션
-                setInfo(true);                  
-                setLoginDisplay("none")         
-            }, 350);
-            setTimeout(() => {
-                setSignDisplay("block")
-            },350)
-            setTimeout(() =>{
-                setSignOpacity(1)
-            },500)                              // 애니메이션
-        } else if (isFormSize === 500) {
-            setFormSize(350); // 회원가입 취소시 sign의 form크기 수축
-        }
+        setFormSize(500); //회원가입 버튼 누르면 sign의 form크기 확장
+        setTimeout(() => {                  // 애니메이션
+            setInfo(true);                  
+            setLoginDisplay("none")         
+        }, 350);
+        setTimeout(() => {
+            setSignDisplay("block")
+        },350)
+        setTimeout(() =>{
+            setSignOpacity(1)
+        },500)                              // 애니메이션
+        
     }
 
     const endSignUp = (e) => { //회원가입 취소 버튼 누를시
-        setSignOpacity(0)
         e.preventDefault();
-        if (isFormSize === 500) {
-            setTimeout(() => {
-                setInfo(false);
-                setSignDisplay("none")
-            }, 350);
-            setTimeout(() => {
-                setLoginDisplay("block")
-                setFormSize(350);
-            },350)
-            setTimeout(() =>{
-                setLoginOpacity(1)
-            },500)
-        } else if (isFormSize === 350) {
-            setFormSize(500); 
-        }
+        setSignOpacity(0)
+        setTimeout(() => {
+            setInfo(false);
+            setSignDisplay("none")
+        }, 350);
+        setTimeout(() => {
+            setLoginDisplay("block")
+            setFormSize(350);
+        },350)
+        setTimeout(() =>{
+            setLoginOpacity(1)
+        },500)  
     }
 
 return(

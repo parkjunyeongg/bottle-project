@@ -15,7 +15,7 @@
     "styled-components": "^5.3.10",
     "web-vitals": "^2.1.4"
   },
-  "proxy": "http://kshnx2.iptime.org:8080",
+  "proxy": "http://10.125.121.221:8080",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

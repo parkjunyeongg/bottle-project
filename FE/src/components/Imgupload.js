@@ -1,46 +1,37 @@
 import '../../src/css/Imgupload.css';
 import { useRef, useState } from "react";
-//import Webcam from "react-webcam";
+//import Webcam from "react-webcam"; //<Webcam/>
 
 const Imgupload = () => {
-    const [imgFile, setImgFile] = useState("");
-    const imgInput = useRef(); 
-
-    const handleButtonClick = () => {
-        imgInput.current.click();
-    };
-    
-    const saveImgFile = (e) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-
-        reader.onloadend = () => {
-            setImgFile(reader.result);
-           };
-
-        if (file) {
-            reader.readAsDataURL(file);
+    const uploadFile = async (file) => {
+        // FormData 객체 생성
+        const formData = new FormData();
+        formData.append('file', file);
+      
+        // HTTP 요청 보내기
+        const response = await fetch('/upload', {
+          method: 'POST',
+          body: formData
+        });
+      
+        if (response.ok) {
+          console.log('파일 업로드 성공!');
         } else {
-            setImgFile(null);
+          console.error('파일 업로드 실패!');
         }
-        
-    };
-    //<Webcam/>
-return(
-    <>
-        <form className="imgup">
-            <h3>bottle identification system </h3>
-            <div className="imgspace">
-            <input type="file" ref={imgInput} onChange={saveImgFile} style={{display: "none"}} />
-            {imgFile && (<img src={URL.createObjectURL(imgFile)} alt="병 이미지" style={{ maxWidth: '100%' }} />)}
-            
-            </div>
-            <div className="imgbutton">
-                <button type="submit" id = "loadbutton" onClick={handleButtonClick}> load img </button>
-            </div>
-        </form>
-    </>
-    );
+      }
+      
+      const handleFileUpload = (event) => {
+        const file = event.target.files[0];
+        uploadFile(file);
+      }
+      
+      return (
+        <div>
+          <input type="file" onChange={handleFileUpload} />
+        </div>
+      );
+
 }
             
 export default Imgupload;
