@@ -1,7 +1,0 @@
-package com.example.demo.persistence;
-
-import org.springframework.data.repository.CrudRepository;
-
-public interface MemberRepo extends CrudRepository<T, ID> {
-
-}
