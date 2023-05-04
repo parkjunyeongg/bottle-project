@@ -3,34 +3,55 @@ import { useRef, useState } from "react";
 //import Webcam from "react-webcam"; //<Webcam/>
 
 const Imgupload = () => {
-    const uploadFile = async (file) => {
-        // FormData 객체 생성
+   const [imgFile, setImgFile] = useState(null);
+    const imgInput = useRef(); 
+
+    const handleButtonClick = () => {
+        imgInput.current.click();
+    };
+    
+    const saveImgFile = (e) => {
+        const file = e.target.files[0];
         const formData = new FormData();
+
         formData.append('file', file);
-      
-        // HTTP 요청 보내기
-        const response = await fetch('/upload', {
+        setImgFile(file)
+
+        fetch('/upload', {
           method: 'POST',
-          body: formData
-        });
-      
-        if (response.ok) {
-          console.log('파일 업로드 성공!');
+          body : formData,
+        })
+        
+        /*reader.onloadend = () => {
+            setImgFile(reader.result);
+           };
+
+        if (file) {
+            reader.readAsDataURL(file);
+            console.log(reader.readAsDataURL(file))
         } else {
-          console.error('파일 업로드 실패!');
-        }
-      }
-      
-      const handleFileUpload = (event) => {
-        const file = event.target.files[0];
-        uploadFile(file);
-      }
-      
-      return (
-        <div>
-          <input type="file" onChange={handleFileUpload} />
-        </div>
-      );
+            setImgFile(null);
+        }*/
+    
+    }
+    
+return(
+    <>
+        <form className="imgup">
+            <h3>bottle identification system </h3>
+            <div className="imgspace">
+            <input type="file" onChange={saveImgFile}  />
+            {imgFile && (<img src={URL.createObjectURL(imgFile)} alt="병 이미지" style={{ maxWidth: '80%' }} />)}
+    
+            <div className="imgbutton">
+                <button type="submit" id = "loadbutton" onClick={handleButtonClick}> load img </button>
+            </div>
+
+            </div>
+            
+        </form>
+    </>
+    );
 
 }
             
