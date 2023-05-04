@@ -13,12 +13,14 @@
     padding: 40px ;
     border-radius: 15px;
     
-    
-    transition: all 0.3s linear;
+    transition: height 0.2s ease-in-out;
 }
 
+.idpwd, .newidpwd {
+    background-color: #ffffff;
+}
 
-.sign > h3 {
+.idpwd > h3, .newidpwd > h3 {
     background-color: #ffffff;
     margin: auto;
     text-align: center;
@@ -32,8 +34,22 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    
 }
+
+
+.visible {
+    opacity: 1;
+    pointer-events: auto;
+    
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .hidden {
+    opacity: 0;
+    pointer-events: none;
+    
+    transition: opacity 0.3s ease-in-out;
+  }
 
 label {
     background-color: #ffffff;
@@ -77,4 +93,11 @@ input {
     border: none;
     background-color: #ffffff;
     color:rgb(155, 153, 153)
+}
+.errorbox {
+    background-color: #ffffff;
+}
+.errorbox > p {
+    background-color: #ffffff;
+    color : red;
 }

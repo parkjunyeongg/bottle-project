@@ -4,20 +4,22 @@ import { useNavigate } from 'react-router-dom';
 
 //로컬 "proxy": "http://10.125.121.221:8080",
 //서버 "proxy":"http://kshnx2.iptime.org:8080",
+
 const Login = () => {
-
+    const movePage = useNavigate();  //router
     
+    const [isInfo, setInfo] = useState(false); // 회원가입 버튼 누름 확인 state
+    const [isFormSize, setFormSize] =useState(350); //로그인 form 크기 state
 
+    const [isLoginOpacity, setLoginOpacity] = useState(1); //표시 설정
+    const [isSignOpacity, setSignOpacity] = useState(0);
+    const [isLoginDisplay, setLoginDisplay] = useState("block");
+    const [isSignDisplay, setSignDisplay] = useState("none");
 
-    const movePage = useNavigate();
-    const goImg = () =>  {
-        movePage('/imgupload');
-      }
+    const [idError,setIdError] = useState(false)    // id,pw미입력 확인 state
+    const [pwError,setPwError] = useState(false)
 
-    const [isInfo, setInfo] = useState(false); // 회원가입 버튼 누름 확인
-    const [isFormSize, setFormSize] =useState(370); //회원가입 버튼 누름시 창 확장
-      
-    const [loginData, setLoginData] = useState({
+    const [loginData, setLoginData] = useState({  //로그인 정보 state
         id : '',
         pw :'',
     })
@@ -30,40 +32,19 @@ const Login = () => {
         }));
       };
 
-    const handleLoginSubmit = (e) => {
+    const handleLoginSubmit = (e) => {           // 로그인-------------------------------------
         e.preventDefault();
         const { id, pw } = loginData;
-        if (!id || !pw) {
-            alert('모든 정보를 입력해 주세요.');
+        if (!id){
+                setPwError(false)
+                setFormSize(400)
+                setIdError(true)
+        } else if (!pw) {
+                setIdError(false)
+                setFormSize(400)
+                setPwError(true)
         } else {
-            console.log(loginData)
-            goImg()
-        }
-      };
-
-    const [signUpData, setSingUpData] = useState({
-        name: '',
-        email: '',
-        newid : '',
-        newpw : '',
-    })
-
-    const handleSignUpChange = (e) => {
-        const { name, value } = e.target;
-        setSingUpData((prevData) => ({
-          ...prevData,
-          [name]: value,
-        }));
-      };
-
-      const handleSignUpSubmit = (e) => {
-        e.preventDefault();
-        const { name, email, newid, newpw } = signUpData;
-
-        if (!name || !email || !newid || !newpw) {
-            alert('모든 정보를 입력해 주세요.');
-        } else {
-            alert('가입이 완료되었습니다.(임시)')
+            /*alert('가입이 완료되었습니다.')
 
               fetch("/insertMember", {
                 method: "POST",
@@ -78,33 +59,93 @@ const Login = () => {
                 })
                 .catch((error) => {
                 console.error('실패:', error);
-                });
-                
-                endSignUp()
+                });*/
+            movePage('/imgupload');
         }
       };
 
-    
-    const [idError,setIdError] = useState(false)
-    const [pwError,setPwError] = useState(false)
-    
+    const [signUpData, setSingUpData] = useState({  //회원가입 정보 state
+        name: '',
+        email: '',
+        newid : '',
+        newpw : '',
+    })
 
-    const startSignUp = () => {
-        setInfo(true); //회원가입 버튼을 누르면 true
+    const handleSignUpChange = (e) => {
+        const { name, value } = e.target;
+        setSingUpData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+      };
 
-        if (isFormSize === 370) {
-            setFormSize(500); //회원가입 버튼 누르면 sign의 form크기 150 확장
+      const handleSignUpSubmit = (e) => {           //회원가입-----------------------------------------
+        e.preventDefault();
+        const { name, email, newid, newpw } = signUpData;
+
+        if (!name || !email || !newid || !newpw) {
+            alert('모든 정보를 입력해 주세요.');
+        } else {
+              fetch("/insertMember", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json;"
+                },
+                body: JSON.stringify(signUpData)
+                })
+                .then((signUpData) => {
+                alert('가입이 완료되었습니다.')
+                console.log('성공:', signUpData)
+                endSignUp()
+                })
+                .catch((error) => {
+                console.error('실패:', error)
+                alert("중복된 아이디입니다.")
+                });
+                
+                
+        }
+      };
+
+
+    const startSignUp = (e) => { //회원가입 버튼 누를시 
+        setLoginOpacity(0)
+        setIdError(false)
+        setPwError(false)
+        e.preventDefault();
+        if (isFormSize < 500) {
+            setFormSize(500); //회원가입 버튼 누르면 sign의 form크기 확장
+            setTimeout(() => {                  // 애니메이션
+                setInfo(true);                  
+                setLoginDisplay("none")         
+            }, 350);
+            setTimeout(() => {
+                setSignDisplay("block")
+            },350)
+            setTimeout(() =>{
+                setSignOpacity(1)
+            },500)                              // 애니메이션
         } else if (isFormSize === 500) {
-            setFormSize(370); // 회원가입 취소시 sign의 form크기 150 줄어듬
+            setFormSize(350); // 회원가입 취소시 sign의 form크기 수축
         }
     }
 
-    const endSignUp = () => {
-        setInfo(false)
-
+    const endSignUp = (e) => { //회원가입 취소 버튼 누를시
+        setSignOpacity(0)
+        e.preventDefault();
         if (isFormSize === 500) {
-            setFormSize(370); 
-        } else if (isFormSize === 370) {
+            setTimeout(() => {
+                setInfo(false);
+                setSignDisplay("none")
+            }, 350);
+            setTimeout(() => {
+                setLoginDisplay("block")
+                setFormSize(350);
+            },350)
+            setTimeout(() =>{
+                setLoginOpacity(1)
+            },500)
+        } else if (isFormSize === 350) {
             setFormSize(500); 
         }
     }
@@ -112,10 +153,10 @@ const Login = () => {
 return(
     <>
         <form className = "sign" style={{height: `${isFormSize}px`}}>
-            {!isInfo && (<h3>Sign In</h3>)}
-            {isInfo && (<h3>Sign Up</h3>)}
+            <div className={`newidpwd ${isInfo ? 'visible' : 'hidden'}`} style={{ opacity :`${isSignOpacity}`, display : `${isSignDisplay}`}} >
 
-            {isInfo && (<div className="idpwd">
+                {isInfo && (<h3>Sign Up</h3>)}
+
                 <div className="name">
                     <label htmlFor="name"> Name </label>
                     <input type="text" name="name" id = "name" value={signUpData.name} onChange={handleSignUpChange} placeholder="Enter Name"/> 
@@ -136,9 +177,19 @@ return(
                     <input type="password" name="newpw" id = "newpw" value={signUpData.newpw} onChange={handleSignUpChange} placeholder="Enter new password"/>
 
                 </div>
-            </div> )}
+                
+                <div className="but">
+                    {isInfo && (<button type="submit" onClick={handleSignUpSubmit}> 가입 </button>)}
+                </div>
+                <div className="signup">
+                    {isInfo && (<button onClick={endSignUp} > 취소 </button>)}
+                </div>
+            </div> 
 
-            {!isInfo && (<div className="idpwd">
+            <div className={`idpwd ${!isInfo ? 'visible' : 'hidden'}`} style={{ opacity :`${isLoginOpacity}`, display : `${isLoginDisplay}` }}>
+
+                {!isInfo && (<h3>Sign In</h3>)}
+
                 <div className="id">
                     <label htmlFor="input_id"> ID </label>
                     <input type="text" name = "id" id = "input_id" value={loginData.id} onChange={handleLoginChange} placeholder="Enter ID"/> 
@@ -149,23 +200,17 @@ return(
                     <input type="password" name = "pw" id = "input_pw" value={loginData.pw} onChange={handleLoginChange} placeholder="Enter password"/>
 
                 </div>
-            </div> )}
-            <div className='errorbox'>
-                {idError && (<p>아이디를 입력해 주세요.</p>)}
-                {pwError && (<p>비밀번호를 입력해 주세요.</p>)}
+                <div className="errorbox">
+                    {idError && (<p>아이디를 입력해 주세요.</p>)}
+                    {pwError && (<p>비밀번호를 입력해 주세요.</p>)}
+                </div>
+                <div className="but">
+                    {!isInfo && (<button type="submit" id = "sub" onClick={handleLoginSubmit}> 로그인 </button> )}
+                </div>
+                <div className="signup">
+                    {!isInfo && (<button id = "sgup" onClick={startSignUp} > 회원가입 </button>)}
+                </div>
             </div>
-            <div className="but">
-                {!isInfo && (<button type="submit" id = "sub" onClick={handleLoginSubmit}> 로그인 </button> )}
-                {isInfo && (<button type="submit" onClick={handleSignUpSubmit}> 가입 </button>)}
-            </div>
-
-            <div className="signup">
-                {!isInfo && (<button id = "sgup" onClick={startSignUp} > 회원가입 </button>
-                )}
-                {isInfo && (<button onClick={endSignUp} > 취소 </button>
-                )}
-            </div>
-            
         </form>
     </>
     );
