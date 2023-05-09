@@ -19,7 +19,8 @@ const Mainbar =() => {
     const goAdmin = () => {
         movePage('/admin')
     }
-
+    
+    
 
 return(
     <>
@@ -29,7 +30,7 @@ return(
             <button onClick={goLogin}> Login </button> 
             <button onClick={goImg}> img upload</button>
             <button onClick={goData}> database </button> 
-            <button onClick={goAdmin}>admin</button>
+            <button onClick={goAdmin}> admin</button>
         </div>
     </div>
     </>

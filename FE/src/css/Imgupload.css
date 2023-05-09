@@ -33,7 +33,7 @@
     margin: 30px;
 }
 
-.imgbutton > button {
+.imgbutton > label {
     padding: 10px 15%;
     
     border-radius: 5px;
