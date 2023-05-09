@@ -13,6 +13,7 @@ const Login = () => {
 
     const [isLoginOpacity, setLoginOpacity] = useState(1); //표시 설정
     const [isSignOpacity, setSignOpacity] = useState(0);
+    
     const [isLoginDisplay, setLoginDisplay] = useState("block");
     const [isSignDisplay, setSignDisplay] = useState("none");
 
@@ -20,7 +21,7 @@ const Login = () => {
     const [pwError,setPwError] = useState(false)
 
     const [loginData, setLoginData] = useState({  //로그인 정보 state
-        id : '',
+        id :'',
         pw :'',
     })
 
@@ -44,31 +45,31 @@ const Login = () => {
                 setFormSize(400)
                 setPwError(true)
         } else {
-            /*alert('가입이 완료되었습니다.')
-
-              fetch("/insertMember", {
+              /*fetch("/login", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json;"
                 },
-                body: JSON.stringify(signUpData)
+                body: JSON.stringify(loginData)
                 })
                 
-                .then((signUpData) => {
-                console.log('성공:', signUpData);
+                .then((loginData) => {
+                console.log('성공:', loginData);
+                
                 })
                 .catch((error) => {
                 console.error('실패:', error);
                 });*/
-            movePage('/imgupload');
+                movePage('/imgupload');
+            
         }
       };
 
     const [signUpData, setSingUpData] = useState({  //회원가입 정보 state
-        name: '',
-        email: '',
-        newid : '',
-        newpw : '',
+        member_name: '',
+        member_email: '',
+        member_id : '',
+        member_pass : '',
     })
 
     const handleSignUpChange = (e) => {
@@ -81,12 +82,12 @@ const Login = () => {
 
       const handleSignUpSubmit = (e) => {           //회원가입-----------------------------------------
         e.preventDefault();
-        const { name, email, newid, newpw } = signUpData;
+        const { member_name, member_email, member_id, member_pass } = signUpData;
 
-        if (!name || !email || !newid || !newpw) {
+        if (!member_name || !member_email || !member_id || !member_pass) {
             alert('모든 정보를 입력해 주세요.');
         } else {
-              fetch("/insertMember", {
+              fetch("http://kshnx2.iptime.org:8080/insertMember", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json;"
@@ -165,22 +166,22 @@ return(
 
                 <div className="name">
                     <label htmlFor="name"> Name </label>
-                    <input type="text" name="name" id = "name" value={signUpData.name} onChange={handleSignUpChange} placeholder="Enter Name"/> 
+                    <input type="text" name="member_name" id = "member_name" value={signUpData.member_name} onChange={handleSignUpChange} placeholder="Enter Name"/> 
                 
                 </div>
                 <div className="email">
                     <label htmlFor="email"> Email </label>
-                    <input type="text" name="email" id = "email" value={signUpData.email} onChange={handleSignUpChange} placeholder="Enter Email"/>
+                    <input type="text" name="member_email" id = "member_email" value={signUpData.member_email} onChange={handleSignUpChange} placeholder="Enter Email"/>
 
                 </div>
                 <div className="id">
                     <label htmlFor="newid"> ID </label>
-                    <input type="text" name="newid" id = "newid" value={signUpData.newid} onChange={handleSignUpChange} placeholder="Enter new ID"/> 
+                    <input type="text" name="member_id" id = "member_id" value={signUpData.member_id} onChange={handleSignUpChange} placeholder="Enter new ID"/> 
                     
                 </div>
                 <div className="pwd">
                     <label htmlFor="newpw"> Password </label>
-                    <input type="password" name="newpw" id = "newpw" value={signUpData.newpw} onChange={handleSignUpChange} placeholder="Enter new password"/>
+                    <input type="password" name="member_pass" id = "member_pass" value={signUpData.member_pass} onChange={handleSignUpChange} placeholder="Enter new password"/>
 
                 </div>
                 

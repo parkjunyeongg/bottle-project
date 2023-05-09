@@ -1,54 +1,44 @@
 import '../../src/css/Imgupload.css';
-import { useRef, useState } from "react";
+import { useState, useEffect } from "react";
 //import Webcam from "react-webcam"; //<Webcam/>
 
 const Imgupload = () => {
-   const [imgFile, setImgFile] = useState(null);
-    const imgInput = useRef(); 
-
-    const handleButtonClick = () => {
-        imgInput.current.click();
-    };
+    const [imageSrc, setimageSrc] = useState('');
     
     const saveImgFile = (e) => {
         const file = e.target.files[0];
         const formData = new FormData();
-
         formData.append('file', file);
-        setImgFile(file)
 
-        fetch('/upload', {
+        fetch('http://kshnx2.iptime.org:8080/upload', {      //이미지 업로드
           method: 'POST',
           body : formData,
         })
+        .then(data => console.log(data))
         
-        /*reader.onloadend = () => {
-            setImgFile(reader.result);
-           };
-
-        if (file) {
-            reader.readAsDataURL(file);
-            console.log(reader.readAsDataURL(file))
-        } else {
-            setImgFile(null);
-        }*/
-    
     }
-    
+
+    useEffect(() => {
+        fetch("http://kshnx2.iptime.org:8080/download")    //이미지 다운로드
+            .then(response => response.blob())
+            .then(blob => {
+              const objectUrl=URL.createObjectURL(blob);
+              setimageSrc(objectUrl);
+            });
+    }, [imageSrc]);
+
 return(
     <>
         <form className="imgup">
             <h3>bottle identification system </h3>
             <div className="imgspace">
-            <input type="file" onChange={saveImgFile}  />
-            {imgFile && (<img src={URL.createObjectURL(imgFile)} alt="병 이미지" style={{ maxWidth: '80%' }} />)}
-    
-            <div className="imgbutton">
-                <button type="submit" id = "loadbutton" onClick={handleButtonClick}> load img </button>
-            </div>
-
-            </div>
+            <input type="file" id = "input-file" onChange={saveImgFile} style={{display: 'none'}} />
+            <img src={imageSrc} alt="병 이미지" style={{ maxWidth: '80%' }}/>
             
+            </div>
+            <div className="imgbutton">
+                <label className="input-file-button" htmlFor="input-file" id = "loadbutton"> load img </label>
+            </div>
         </form>
     </>
     );
