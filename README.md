@@ -32,3 +32,8 @@ $ python app.py
 - FE, 'localhost:3000'
     - index.html이 스프링이어야 한다.
 
+4.개발환경
+- python 3.10.10 (YOLOV5 호환)
+- springboot 2.7.7 (ubuntu server 호환)
+- openjdk8
+
