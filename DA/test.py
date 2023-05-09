@@ -3,8 +3,8 @@ import yolov5
 
 # Model
 model = torch.hub.load("ultralytics/yolov5", "yolov5m")  # or yolov5n - yolov5x6, custom
-# model = yolov5.load("ultralytics/yolov5", "fcakyon/yolov5s-v7.0") - yolov5 최신 버전 아니면 작동 안함
-# m이 결과가 가장 좋은듯?
+# model = yolov5.load("ultralytics/yolov5", "fcakyon/yolov5s-v7.0") - yolov5 최신 버전에서만 작동함
+# 기본 모델 중에서는 m이 결과가 가장 좋은듯?
 
 # Images
 # or file, Path, PIL, OpenCV, numpy, list
@@ -26,6 +26,6 @@ print("============================")
 # 검출한 사진을 파일로 저장
 # results.save()
 # print("============================")
-# # 각 검출한 물체를 개별로 저장
+# # 각 검출한 물체들을 개별 파일로 저장
 # results.crop()
 # print("============================")
