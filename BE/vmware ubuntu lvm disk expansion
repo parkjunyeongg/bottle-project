@@ -29,9 +29,9 @@ Created a new partition 4 of type 'Linux filesystem' and of size 40 GiB.
 Command (m for help): t
 Partition number (1-4, default 4): 
 Partition type (type L to list all types): L  
-~
+//~
  31 Linux LVM                      E6D6D379-F507-44C2-A23C-238F2A3DF928
-~
+~//
 Partition type (type L to list all types): 31
 
 Changed type of partition 'Linux filesystem' to 'Linux LVM'.
