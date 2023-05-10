@@ -21,7 +21,7 @@ Ubuntu 20.04 LTS 환경설정
   - yolov5 설치에러 해결중 
 
 # JAVA
-- openJDK 1.8
+- penJDK 1.8
 
 # SpringBoot
 - 2.7.11 버전으로 진행하였으나 포팅되지않아 2.7.7로 다운그레이드
