@@ -21,9 +21,12 @@ Ubuntu 20.04 LTS 환경설정
   - yolov5 설치에러 해결중 
 
 # JAVA
-- penJDK 1.8
+- OpenJDK 1.8
 
 # SpringBoot
 - 2.7.11 버전으로 진행하였으나 포팅되지않아 2.7.7로 다운그레이드
 - springsecurity 개발중
+  - ## REST_API
+    - react 사진 다운로드 서비스 개발시 @RequestParm, Blob형식 사용
+
 
