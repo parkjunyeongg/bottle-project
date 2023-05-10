@@ -1,4 +1,5 @@
 Ubuntu 20.04 LTS 환경설정
+=============
 
 # DDNS
 * kshnx2.iptime.org
