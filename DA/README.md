@@ -7,6 +7,7 @@ cd DA
 py -3.10 -m venv venv
 .\venv\Scripts\activate
 pip install -r requirements.txt
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117
 ```
 
 Linux
