@@ -18,9 +18,10 @@ const Admin = () => {
         <table>
           <thead>
             <tr>
-                <th className="thid">ID</th>
-                <th className="thtime">Name</th>
-                <th className="thadd">Email</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Point</th>
             </tr>
           </thead>
           <tbody>
@@ -29,6 +30,7 @@ const Admin = () => {
                 <td>{item.member_id}</td>
                 <td>{item.member_name}</td>
                 <td>{item.member_email}</td>
+                <td>{item.point}</td>
               </tr>
             ))}
           </tbody>

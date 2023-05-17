@@ -1,0 +1,32 @@
+Ubuntu 20.04 LTS 환경설정
+=============
+
+# DDNS
+* kshnx2.iptime.org
+
+# PORT
+* 22 : ssl, sftp
+* 8080 : tomcat
+* 3000 : react
+* 3306 : mariadb
+* 5000 : flask
+* 30000 : 공유기설정
+
+# Python
+- 우분투에서 지원하는 파이썬 버전은 3.8이나 - yolov5를 위해 3.10.10으로 업그레이드 
+- linux ver pytourch 설치
+- pip3.10 설치
+- ## Python 문제
+  - python 내장 flask로는 정상동작 확인하였으나 외부 flask 사용시 에러발생
+  - yolov5 설치에러 해결중 
+
+# JAVA
+- OpenJDK 1.8
+
+# SpringBoot
+- 2.7.11 버전으로 진행하였으나 포팅되지않아 2.7.7로 다운그레이드
+- springsecurity 개발중
+- ## REST_API
+  - react 사진 다운로드 서비스 개발시 @RequestParm, Blob형식 사용
+
+

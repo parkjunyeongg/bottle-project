@@ -1,4 +1,5 @@
 import '../../src/css/Login.css';
+import Mainbar from './Mainbar';
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
@@ -19,6 +20,8 @@ const Login = () => {
 
     const [idError,setIdError] = useState(false)    // id,pw미입력 확인 state
     const [pwError,setPwError] = useState(false)
+
+    const [isLogin, setLogin ] = useState(false); //login 했는지 안했는지
 
     const [loginData, setLoginData] = useState({  //로그인 정보 state
         id :'',
@@ -60,8 +63,11 @@ const Login = () => {
                 .catch((error) => {
                 console.error('실패:', error);
                 });*/
-                movePage('/imgupload');
-            
+                setLogin(true);
+                console.log(isLogin);
+                <Mainbar isLogin={isLogin} />
+                movePage('');
+                
         }
       };
 

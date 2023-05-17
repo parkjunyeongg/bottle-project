@@ -15,3 +15,5 @@ Linux
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 ```
 
+test01.py -> 결과를 창에 띄움
+test02.py -> 결과를 json에 실어서 보냄

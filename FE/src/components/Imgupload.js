@@ -33,7 +33,7 @@ return(
             <h3>bottle identification system </h3>
             <div className="imgspace">
             <input type="file" id = "input-file" onChange={saveImgFile} style={{display: 'none'}} />
-            <img src={imageSrc} alt="병 이미지" style={{ maxWidth: '80%' }}/>
+            {imageSrc && (<img src={imageSrc} alt="병 이미지" style={{ maxWidth: '80%' }}/>)}
             
             </div>
             <div className="imgbutton">
