@@ -33,9 +33,9 @@ Ubuntu 20.04 LTS 환경설정
 ## 환경 : window10, openssl 환경변수 설정
 
 1. openssl 인증서 발급
- - private.key 이름의 개인키 발급
+ * private.key 이름의 개인키 발급
  - openssl genpkey -algorithm RSA -out private.key
- - public.key 이름의 공개키 발급 
+ * public.key 이름의 공개키 발급 
  - rsa -in private.key -pubout -out public.key
 
 
