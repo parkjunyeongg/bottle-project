@@ -38,11 +38,11 @@ Ubuntu 20.04 LTS 환경설정
 - rsa -in private.key -pubout -out public.key
 - public.key 이름의 공개키 발급
 
-# CA인증을 대체하기 위해 자체 CA인증을 진행한다.
+## CA인증을 대체하기 위해 자체 CA인증을 진행한다.
 - openssl genpkey -algorithm RSA -out rootCA.key
 - openssl req -new -key rootCA.key -out rootCA.csr
 
-# 스프링부트에서 사용하기 위해 p12 키스토어로 인코딩한다.
+## 스프링부트에서 사용하기 위해 p12 키스토어로 인코딩한다.
 - keytool -genkeypair -alias myapp -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore keystore.p12 -validity 3650
 
 2. 스프링부트 application.properties
