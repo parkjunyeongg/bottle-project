@@ -48,8 +48,8 @@ Ubuntu 20.04 LTS 환경설정
  - keytool -genkeypair -alias myapp -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore keystore.p12 -validity 3650
 
 4. 스프링부트 application.properties
- server.port = 8080
- server.ssl.key-store-type=PKCS12
- server.ssl.key-store=c:/certs/keystore.p12 //경로 입력에 유의한다.
- server.ssl.key-store-password=123456
+ - server.port = 8080
+ - server.ssl.key-store-type=PKCS12
+ - server.ssl.key-store=c:/certs/keystore.p12 //경로 입력에 유의한다.
+ - server.ssl.key-store-password=123456
 
