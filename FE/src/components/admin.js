@@ -19,20 +19,27 @@ const Admin = () => {
           <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
+                <th>이름</th>
                 <th>Email</th>
+                <th>가입일</th>
+                <th>성공/실패</th>
                 <th>Point</th>
             </tr>
           </thead>
           <tbody>
-            {data.map((item) => (
-              <tr key={item.member_id}>
-                <td>{item.member_id}</td>
-                <td>{item.member_name}</td>
-                <td>{item.member_email}</td>
-                <td>{item.point}</td>
-              </tr>
-            ))}
+            {Array.from({ length: Math.max(20, data.length) }).map((_, index) => {
+            const item = data[index];
+            return (
+            <tr key={index}>
+              <td>{item?.member_id}</td>
+              <td>{item?.member_name}</td>
+              <td>{item?.member_email}</td>
+              <td>{item?.member_date}</td>
+              <td>{item?.member_bottle}</td>
+              <td>{item?.point}</td>
+            </tr>
+            );
+          })}
           </tbody>
         </table>
       </div>

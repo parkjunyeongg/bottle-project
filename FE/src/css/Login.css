@@ -71,6 +71,7 @@ input {
     margin: 30px auto;
 }
 .but > button {
+    cursor: pointer;
     padding: 10px 40%;
     
     border-radius: 5px;
@@ -88,6 +89,7 @@ input {
 }
 
 .signup > button {
+    cursor: pointer;
     border: none;
     background-color: #ffffff;
     color:rgb(155, 153, 153)

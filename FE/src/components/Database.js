@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+//import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Database = () => {
@@ -10,22 +10,29 @@ const Database = () => {
       movePage('/admin')
     }
 
+    const goTest = () => {
+      movePage('/testtemp')
+    }
+
     return(
       
       <form className="dataform">
         <div className="datatable">
         <button onClick={goAdmin}> admin</button>
+        <button onClick={goTest}>table test</button>
         <table>
           <thead>
             <tr>
-                <th>ID</th>
-                <th>time</th>
-                <th>coordinate</th>
-                <th>img</th>
+                <th>작성일</th>
+                <th>작성자</th>
+                <th>종류</th>
+                <th>좌표</th>
+                <th>성공유무</th>
             </tr>
           </thead>
           <tbody>
               <tr>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
