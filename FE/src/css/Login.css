@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
-* {
-    background-color: rgb(236, 236, 236);
-}
+
 
 .sign {
     box-sizing: border-box;
@@ -73,6 +71,7 @@ input {
     margin: 30px auto;
 }
 .but > button {
+    cursor: pointer;
     padding: 10px 40%;
     
     border-radius: 5px;
@@ -90,6 +89,7 @@ input {
 }
 
 .signup > button {
+    cursor: pointer;
     border: none;
     background-color: #ffffff;
     color:rgb(155, 153, 153)

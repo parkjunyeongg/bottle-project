@@ -28,7 +28,11 @@ $ python app.py
     - 권한(profile)
     - 인증(login)
     - API(user, history)
-    - (기타 추가할 내용은 BE가 채우기)
 - FE, 'localhost:3000'
     - index.html이 스프링이어야 한다.
+
+4. 개발환경
+    - python 3.10.10 (YOLOV5 호환)
+    - springboot 2.7.7 (ubuntu server 호환)
+    - openjdk8
 
