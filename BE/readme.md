@@ -29,4 +29,27 @@ Ubuntu 20.04 LTS 환경설정
 - ## REST_API
   - react 사진 다운로드 서비스 개발시 @RequestParm, Blob형식 사용
 
+# HTTPS 사용을 위한 테스트 SSL 인증서 발급
+## 환경 : window10, openssl 환경변수 설정
+
+1. openssl 인증서 발급
+ * private.key 이름의 개인키 발급
+ - openssl genpkey -algorithm RSA -out private.key
+ * public.key 이름의 공개키 발급 
+ - rsa -in private.key -pubout -out public.key
+
+
+2. CA인증을 대체하기 위해 자체 CA인증을 진행한다.
+ - openssl genpkey -algorithm RSA -out rootCA.key
+ - openssl req -new -key rootCA.key -out rootCA.csr
+ - openssl x509 -req -days 365 -in rootCA.csr -signkey rootCA.key -out rootCA.crt
+ 
+3. 스프링부트에서 사용하기 위해 p12 키스토어로 인코딩한다.
+ - keytool -genkeypair -alias myapp -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore keystore.p12 -validity 3650
+
+4. 스프링부트 application.properties
+ - server.port = 8080
+ - server.ssl.key-store-type=PKCS12
+ - server.ssl.key-store=c:/certs/keystore.p12 //경로 입력에 유의한다.
+ - server.ssl.key-store-password=123456
 
