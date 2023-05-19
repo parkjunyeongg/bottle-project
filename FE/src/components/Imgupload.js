@@ -4,7 +4,12 @@ import { useState, useEffect } from "react";
 
 const Imgupload = () => {
     const [imageSrc, setimageSrc] = useState('');
+    const [imageUp, setImageUp] = useState(false);
     
+    const testbutton = () => {
+        setImageUp(true);
+    }
+
     const saveImgFile = (e) => {
         const file = e.target.files[0];
         const formData = new FormData();
@@ -31,15 +36,32 @@ return(
     <>
         <form className="imgup">
             <h3>bottle identification system </h3>
-            <div className="imgspace">
-            <input type="file" id = "input-file" onChange={saveImgFile} style={{display: 'none'}} />
-            {imageSrc && (<img src={imageSrc} alt="병 이미지" style={{ maxWidth: '80%' }}/>)}
-            
-            </div>
-            <div className="imgbutton">
-                <label className="input-file-button" htmlFor="input-file" id = "loadbutton"> load img </label>
-            </div>
+            {!imageUp && <div className="imgspace">
+                <div className="textspace">
+                    <h3>유의사항</h3>
+                    <p>내용</p>
+                </div>
+                <div className="labelspace">
+                    <h3>label 추가</h3>
+                    <p>내용</p>
+                </div> 
+                <div className="imgbutton">
+                    <label className="input-file-button" htmlFor="input-file" id = "loadbutton"> 사진 올리기 </label>
+                </div>
+            </div>}
+                {imageUp && <div className="imgdown">
+                <input type="file" id = "input-file" onChange={saveImgFile} style={{display: 'none'}} />
+                {imageSrc && (<img src={imageSrc} alt="병 이미지" style={{ maxWidth: '80%' }}/>)}
+                <div className="bottleinfo">
+                    <h3>판별 결과</h3>
+                    <p>내용</p>
+                </div>
+                <div className="imgbutton">
+                    <label className="input-file-button" htmlFor="input-file" id = "loadbutton"> 다시 올리기 </label>
+                </div>
+            </div> }
         </form>
+        <button onClick={testbutton}> test button</button>
     </>
     );
 

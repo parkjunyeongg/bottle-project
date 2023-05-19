@@ -10,7 +10,7 @@ const Login = () => {
     const movePage = useNavigate();  //router
     
     const [isInfo, setInfo] = useState(false); // 회원가입 버튼 누름 확인 state
-    const [isFormSize, setFormSize] =useState(350); //로그인 form 크기 state
+    const [isFormSize, setFormSize] =useState(400); //로그인 form 크기 state
 
     const [isLoginOpacity, setLoginOpacity] = useState(1); //표시 설정
     const [isSignOpacity, setSignOpacity] = useState(0);
@@ -133,7 +133,7 @@ const Login = () => {
         setLoginOpacity(0)
         setIdError(false)
         setPwError(false)
-        setFormSize(500); //회원가입 버튼 누르면 sign의 form크기 확장
+        setFormSize(600); //회원가입 버튼 누르면 sign의 form크기 확장
         setTimeout(() => {                  // 애니메이션
             setInfo(true);                  
             setLoginDisplay("none")         
@@ -156,7 +156,7 @@ const Login = () => {
         }, 350);
         setTimeout(() => {
             setLoginDisplay("block")
-            setFormSize(350);
+            setFormSize(400);
         },350)
         setTimeout(() =>{
             setLoginOpacity(1)
@@ -171,26 +171,30 @@ return(
                 {isInfo && (<h3>Sign Up</h3>)}
 
                 <div className="name">
-                    <label htmlFor="name"> Name </label>
-                    <input type="text" name="member_name" id = "member_name" value={signUpData.member_name} onChange={handleSignUpChange} placeholder="Enter Name"/> 
+                    <label htmlFor="name"> 이름 </label>
+                    <input type="text" name="member_name" id = "member_name" value={signUpData.member_name} onChange={handleSignUpChange} /> 
                 
                 </div>
                 <div className="email">
-                    <label htmlFor="email"> Email </label>
-                    <input type="text" name="member_email" id = "member_email" value={signUpData.member_email} onChange={handleSignUpChange} placeholder="Enter Email"/>
+                    <label htmlFor="email"> 이메일 </label>
+                    <input type="text" name="member_email" id = "member_email" value={signUpData.member_email} onChange={handleSignUpChange} />
 
                 </div>
                 <div className="id">
                     <label htmlFor="newid"> ID </label>
-                    <input type="text" name="member_id" id = "member_id" value={signUpData.member_id} onChange={handleSignUpChange} placeholder="Enter new ID"/> 
+                    <input type="text" name="member_id" id = "member_id" value={signUpData.member_id} onChange={handleSignUpChange} placeholder="5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다."/> 
                     
                 </div>
                 <div className="pwd">
-                    <label htmlFor="newpw"> Password </label>
-                    <input type="password" name="member_pass" id = "member_pass" value={signUpData.member_pass} onChange={handleSignUpChange} placeholder="Enter new password"/>
+                    <label htmlFor="newpw"> 비밀번호 </label>
+                    <input type="password" name="member_pass" id = "member_pass" value={signUpData.member_pass} onChange={handleSignUpChange} placeholder="8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요."/>
 
                 </div>
-                
+                <div className="pwd">
+                    <label htmlFor="newpw"> 비밀번호 확인 </label>
+                    <input type="password" name="member_pass" id = "member_pass" value={signUpData.member_pass} onChange={handleSignUpChange}/>
+
+                </div>
                 <div className="but">
                     {isInfo && (<button type="submit" onClick={handleSignUpSubmit}> 가입 </button>)}
                 </div>
@@ -209,7 +213,7 @@ return(
                     
                 </div>
                 <div className="pwd">
-                    <label htmlFor="input_pw"> Password </label>
+                    <label htmlFor="input_pw"> 비밀번호 </label>
                     <input type="password" name = "pw" id = "input_pw" value={loginData.pw} onChange={handleLoginChange} placeholder="Enter password"/>
 
                 </div>

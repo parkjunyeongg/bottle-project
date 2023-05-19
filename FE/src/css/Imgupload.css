@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
 .imgup {
     box-sizing: border-box;
-    width: 70%;
+    width: 500px;
     
     margin: 100px auto;
     background: #ffffff;
@@ -23,7 +23,6 @@
 
 .imgspace {
     width: 80%;
-    height: 450px;
     margin: 30px auto;
 }
 
@@ -42,4 +41,9 @@
     color: white;
     display: inline-flex;
     border: none;
+}
+
+ .textspace, .labelspace, .bottleinfo {
+
+    text-align: center;
 }
