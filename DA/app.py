@@ -1,5 +1,6 @@
 import io
 import yolov5
+import torch
 # import tensorflow as tf
 
 from flask import Flask, request, jsonify
@@ -30,7 +31,7 @@ def predict():
         # 모델에 사진을 넣어서 판별
         results = model(im, size=640)
         # 결과를 사진으로 저장
-        results.save()
+        # results.save()
         # bbox 값을 딕셔너리에 담아서 json으로 전달
         return jsonify(results.pandas().xyxy[0].to_dict('records'))
     
@@ -38,14 +39,16 @@ def predict():
         return jsonify({'error': str(e)}), 400
     
     except Exception as e:
-        return jsonify({'error': 'An error occurred while processing the request'}), 500
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     try:
         model = yolov5.load('keremberke/yolov5s-garbage')
+        # model = torch.hub.load('ultralytics/yolov5', 'yolov5s')  # yolov5n - yolov5x6 official model
+        # model = torch.load('best_model.pt')  # custom model
     except Exception as e:
         print(f'Failed to load model: {str(e)}')
         exit(1)
     
-    app.run(host='0.0.0.0', debug=True, port=5000)
+    app.run(host='0.0.0.0', debug=True, port=55000)
 
