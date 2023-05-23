@@ -43,10 +43,10 @@ const Database = () => {
             const item = data[index];
             return (
             <tr key={index}>
+              <td>{item?.member_date}</td>
               <td>{item?.member_id}</td>
               <td>{item?.member_name}</td>
               <td>{item?.member_email}</td>
-              <td>{item?.member_date}</td>
               <td>{item?.member_bottle}</td>
             </tr>
             );
