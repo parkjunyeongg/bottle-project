@@ -6,10 +6,6 @@ const Database = () => {
     //이미지 판별된 순간 바로 실시간 로그 갱신
     const movePage = useNavigate();
 
-    const goAdmin = () => {
-      movePage('/admin')
-    }
-
     const goTest = () => {
       movePage('/testtemp')
     }
@@ -26,7 +22,7 @@ const Database = () => {
       
       <form className="dataform">
         <div className="datatable">
-        <button onClick={goAdmin}> admin</button>
+        
         {/*<button onClick={goTest}>table test</button>*/}
         <table>
           <thead>

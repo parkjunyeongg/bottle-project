@@ -10,6 +10,10 @@ const Mypage = () => {
     const goImg = () =>  {
         movePage('/imgupload');
     }
+
+    const goAdmin = () => {
+      movePage('/admin')
+    }
     
     /*useEffect(() => {
         fetch("http://kshnx2.iptime.org:8080/getMember")
@@ -20,14 +24,14 @@ const Mypage = () => {
 return(
     <>
         <div className="myPageDiv"> 
-            <div className="pointBox">
-                <h2>보유 포인트</h2>
-                    <h2>0P</h2>
-            </div>
             <div className="myInfoBox">
                 <h2>개인정보 관리</h2>
                     <p>이름</p>
                     <p>전화번호</p>
+            </div>
+            <div className="pointBox">
+                <h2>관리자 계정입니다.</h2>
+                <button onClick={goAdmin}> 관리자 페이지 이동</button>
             </div>
             <div className="bottleInfoBox">
                 <h2>투입 자원 정보</h2>
@@ -36,7 +40,6 @@ return(
                     <p>소형</p>
                 <button className="imgupbutton" onClick={goImg}>이미지 업로드</button>
             </div>
-            
             <div className="tableBox">
                 <h2>최근 내역</h2>
                     <div className="datatable">
