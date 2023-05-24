@@ -1,0 +1,66 @@
+@startuml
+skinparam monochrome true
+
+object bottleproject {
++ bottleproject()
+}
+
+object Mainbar {
++ Mainbar()
++ gohome()=>home
++ goImg()=>Imgupload
++ goLogin()=>Login
++ goData()=>Database
++ goMy()=>Mypage
+
+
+}
+
+object Login {
++ Login()
++ handleLoginChange()
++ handleLoginSubmit()
++ handleSignUpChange()
++ handleSignUpSubmit()
++ useState(loginDate)
++ useState(signUpData)
+
+
+}
+
+object home {
++ goLogin()=>Login
+}
+
+object Imgupload {
++ Imgupload()
++ saveImgFile()
+
+}
+
+object Database {
++ Database()
++ goAdmin()
+
+}
+object Admin {
++ Admin()
+}
+object Mypage {
++ Mypage()
+}
+
+
+
+
+bottleproject --> home
+home --> Mainbar
+home --> Login
+Mainbar --> Imgupload
+Mainbar --> Database
+Mainbar --> Login
+Database --> Admin
+Mainbar --> Mypage
+Mypage --> Imgupload
+
+@enduml

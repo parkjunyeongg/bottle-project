@@ -1,31 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
-
-/*body {
-  background-image: url("public/img/ex1.jpg");
-  background-repeat: no-repeat;
-  background-position: top center;
-  background-size: cover;
-}*/
-.backgroundimg > img{
-  width: 100%; /* 이미지의 가로 너비를 100%로 설정하여 부모 요소에 맞춥니다. */
-  height: auto; 
-}
 /*창 작아졌을때*/
-@media screen and (max-width: 886px) {
+@media screen and (max-width: 962px) {
     .top-bar , .barmenu1 > button {
       display: none;
-
-  
     }
     .logogo{
       margin-right: auto; 
       margin-top: 10px;
     }
     
-    @media (max-width: 886px) {
+    @media (max-width: 962px) {
       .barmenu2 > .toggle-button {
         display: block;
-        
       }
 
       .barmenu2 > button {
@@ -39,7 +25,7 @@
     }
   }
   /*창 커졌을때*/
-  @media (min-width: 886px) { 
+  @media (min-width: 963px) { 
     .barmenu2 > .toggle-button , .hidenav > button{
       display: none;
     }
@@ -90,7 +76,7 @@
 }
 
 .hidenav > button {
-  
+  cursor: pointer;
   height: 3.6em;
     
   padding-left: 50px;
@@ -117,16 +103,17 @@
 
 .barmenu2 {
   background-color: #ffffff;
-
   display: flex;
   justify-content: center; 
-  
-
   padding-right: 20px;
-      
+}
+
+.barmenu2 > button {
+  cursor: pointer;
 }
 
 .barmenu1 > button {
+    cursor: pointer;
     height: 3.5em;
     
     padding-left: 50px;

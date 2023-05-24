@@ -10,27 +10,47 @@ const Database = () => {
       movePage('/admin')
     }
 
+    const goTest = () => {
+      movePage('/testtemp')
+    }
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        fetch("http://kshnx2.iptime.org:8080/getMember")
+            .then(response => response.json())
+            .then(json => setData(json))
+    }, []);
+
     return(
       
       <form className="dataform">
         <div className="datatable">
         <button onClick={goAdmin}> admin</button>
+        {/*<button onClick={goTest}>table test</button>*/}
         <table>
           <thead>
             <tr>
-                <th>ID</th>
-                <th>time</th>
-                <th>coordinate</th>
-                <th>img</th>
+                <th>작성일</th>
+                <th>작성자</th>
+                <th>종류</th>
+                <th>좌표</th>
+                <th>성공유무</th>
             </tr>
           </thead>
           <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
+            {Array.from({ length: Math.max(20, data.length) }).map((_, index) => {
+            const item = data[index];
+            return (
+            <tr key={index}>
+              <td>{item?.member_id}</td>
+              <td>{item?.member_name}</td>
+              <td>{item?.member_email}</td>
+              <td>{item?.member_date}</td>
+              <td>{item?.member_bottle}</td>
+            </tr>
+            );
+          })}
           </tbody>
         </table>
       </div>
