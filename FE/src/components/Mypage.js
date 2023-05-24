@@ -45,8 +45,8 @@ return(
                             <tr>
                                 <th>작성 일</th>
                                 <th>종류</th>
+                                <th>좌표</th>
                                 <th>성공유무</th>
-                                <th>포인트</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,7 +57,7 @@ return(
                             <td>{item?.member_id}</td>
                             <td>{item?.member_name}</td>
                             <td>{item?.member_email}</td>
-                            <td>{item?.member_date}</td>
+                            <td>{item?.member_address}</td>
                             </tr>
                             );
                         })}
