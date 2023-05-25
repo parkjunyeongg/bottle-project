@@ -3,6 +3,12 @@ K-digital-02 bottle identification project
 
 # You should read it first...
 
+1. 병 판별 데이터 분석 및 웹 서비스 구축 기획안 : https://docs.google.com/document/d/1MNx_ZBxme7EzghV2o5YCM3HD9PrhmfMrc4ZL8C719ng/edit?usp=sharing
+
+2. 병 판별 데이터 분석 및 웹 서비스 설계서 : https://docs.google.com/document/d/14qFV3krXvY4FhIDjSZQOsbOTRWI3e4PTBu73TSYKZlU/edit?usp=sharing
+
+3. 병 판별 데이터 분석 및 웹 서비스 화면 상세 설계서 : https://docs.google.com/document/d/1CUiWeUYGTQhbvvTxv4pECfqIYupVd3BeXT3IinvuzUI/edit#heading=h.1sbrum4kcsjp
+
 ## 구조
 - DA, 데이터 분석 관련
 - FE, 사용자 입력 및 시각화 관련
