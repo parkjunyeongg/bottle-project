@@ -23,7 +23,6 @@ const Admin = () => {
                 <th>Email</th>
                 <th>가입일</th>
                 <th>성공/실패</th>
-                <th>Point</th>
             </tr>
           </thead>
           <tbody>
@@ -36,7 +35,6 @@ const Admin = () => {
               <td>{item?.member_email}</td>
               <td>{item?.member_date}</td>
               <td>{item?.member_bottle}</td>
-              <td>{item?.point}</td>
             </tr>
             );
           })}

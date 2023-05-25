@@ -29,6 +29,7 @@ const Login = () => {
         id :'',
         pw :'',
     })
+    
 
     const handleLoginChange = (e) => {
         const { name, value } = e.target;
@@ -98,6 +99,8 @@ const Login = () => {
         }
       }, [signUpData.member_id]);
 
+      
+
     useEffect(() => {
         if (signUpData.member_pass !== '') {
             if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/.test(signUpData.member_pass)) {
@@ -108,6 +111,8 @@ const Login = () => {
         }
       }, [signUpData.member_pass]);
 
+    
+
     useEffect(() => {
         if (confirmPass !== '') {
             if (confirmPass !== signUpData.member_pass) {
@@ -116,8 +121,44 @@ const Login = () => {
                 setConfirmPassP('');
             }
         }
-
     }, [confirmPass, signUpData.member_pass]);
+
+    useEffect(() => {
+        if (isInfo) {
+          if (signIdError !== '') {
+            setFormSize(prevSize => prevSize + 60);
+            console.log("idsizeup")
+          } else if (signIdError === '' && isFormSize > 600) {
+            setFormSize(prevSize => prevSize - 60);
+          }
+        }
+      }, [signIdError, isInfo, isFormSize]);
+      
+      useEffect(() => {
+        if (isInfo) {
+          if (signPwdError !== '') {
+            setFormSize(prevSize => prevSize + 60);
+            console.log("pwdsizeup")
+          } else if (signPwdError === '' && isFormSize > 600) {
+            setFormSize(prevSize => prevSize - 60);
+          }
+        }
+      }, [signPwdError, isInfo, isFormSize]);
+      
+      useEffect(() => {
+        if (isInfo) {
+          if (confirmPassP !== '') {
+            setFormSize(prevSize => prevSize + 60);
+            console.log("pwd2sizeup")
+          } else if (confirmPassP === '' && isFormSize !== 600) {
+            setFormSize(prevSize => prevSize - 60);
+          }
+        }
+      }, [confirmPassP, isInfo, isFormSize]);
+
+    
+
+
 
     const handleSignUpChange = (e) => {
         const { name, value } = e.target;
@@ -232,17 +273,17 @@ return(
                 <div className="id">
                     <label htmlFor="newid"> ID </label>
                     <input type="text" name="member_id" id = "member_id" value={signUpData.member_id} onChange={handleSignUpChange} placeholder="5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다."/> 
-                    {signIdError && <p>{signIdError}</p>}
+                    <div className="errorbox">{signIdError && <p>{signIdError}</p>}</div>
                 </div>
                 <div className="pwd">
                     <label htmlFor="newpw"> 비밀번호 </label>
                     <input type="password" name="member_pass" id = "member_pass" value={signUpData.member_pass} onChange={handleSignUpChange} placeholder="8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요."/>
-                    {signPwdError && <p>{signPwdError}</p>}
+                    <div className="errorbox">{signPwdError && <p>{signPwdError}</p>}</div>
                 </div>
                 <div className="pwd">
                     <label> 비밀번호 확인 </label>
                     <input type="password" name="confirm_pass" id = "confirm_pass" value={confirmPass} onChange={handleConfirmPassChange} />
-                    {confirmPassP && <p>{confirmPassP}</p>}
+                    <div className="errorbox">{confirmPassP && <p>{confirmPassP}</p>}</div>
                 </div>
                 <div className="but">
                     {isInfo && (<button type="submit" onClick={handleSignUpSubmit}> 가입 </button>)}

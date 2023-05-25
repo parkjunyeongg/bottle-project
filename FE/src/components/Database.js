@@ -32,6 +32,7 @@ const Database = () => {
                 <th>종류</th>
                 <th>좌표</th>
                 <th>성공유무</th>
+                <th>퍼센트</th>
             </tr>
           </thead>
           <tbody>
@@ -44,6 +45,7 @@ const Database = () => {
               <td>{item?.member_name}</td>
               <td>{item?.member_email}</td>
               <td>{item?.member_bottle}</td>
+              <td>{item?.member_persent}</td>
             </tr>
             );
           })}
