@@ -10,8 +10,10 @@ import com.example.demo.persistence.MemberRepo;
 
 @Service
 public class MemberServicelmpl implements MemberService {
+	public MemberVO tempMemberVO;
+	
 	@Autowired
-	private MemberRepo memberRepo;
+	private MemberRepo memberRepo;	
 	
 	@Override
 	public List<MemberVO> getMemberList() {
@@ -22,27 +24,28 @@ public class MemberServicelmpl implements MemberService {
 	@Override
 	public void insertMember(MemberVO memberVO) {
 		// TODO Auto-generated method stub
+		tempMemberVO=memberVO;
 		memberRepo.save(memberVO);		
 	}
 
 	@Override
 	public MemberVO getMember(MemberVO memberVO) {
 		// TODO Auto-generated method stub
-		return memberRepo.findById(memberVO.getName()).get();
+		return memberRepo.findById(memberVO.getMember_name()).get();
 	}
 
 	@Override
 	public void updateMember(MemberVO memberVO) {
 		// TODO Auto-generated method stub
-		MemberVO findMemberVO = memberRepo.findById(memberVO.getName()).get();
-		findMemberVO.setNewpw(memberVO.getNewpw());
+		MemberVO findMemberVO = memberRepo.findById(memberVO.getMember_name()).get();
+		findMemberVO.setMember_pass(memberVO.getMember_pass());
 		memberRepo.save(findMemberVO);
 	}
 
 	@Override
 	public void deleteMember(MemberVO memberVO) {
 		// TODO Auto-generated method tub
-		memberRepo.deleteById(memberVO.getName());
+		memberRepo.deleteById(memberVO.getMember_id());
 		
 	}
 
