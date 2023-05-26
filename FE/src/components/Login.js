@@ -97,14 +97,13 @@ const Login = () => {
         if (signUpData.member_id !== '') {
             if (!/^[a-z0-9-_]{5,10}$/.test(signUpData.member_id)) {
                 setSignIdError('아이디는 5~10자의 영문 소문자, 숫자와 특수기호(-,_)만 사용할 수 있습니다.');
-                
+                setFormSize(prevSize => Math.min(prevSize + 50, 750));
             } else {
-                setSignIdError('');
-                
+              setSignIdError('');
+              setFormSize(prevSize => Math.max(prevSize - 50, 600));
             }
-        }
-      }, [signUpData.member_id]);
-
+          }
+        }, [signUpData.member_id]);
       
 
     useEffect(() => {
@@ -135,11 +134,10 @@ const Login = () => {
         if (isInfo) {
           if (signIdError === '아이디는 5~10자의 영문 소문자, 숫자와 특수기호(-,_)만 사용할 수 있습니다.') {
             setIdErrorCount(1);
-            console.log(idErrorCount)
-          } else if (signIdError === ''){
-            if (isFormSize > 600)
+            console.log('id : ', idErrorCount)
+          } else if (signIdError === '') {
             setIdErrorCount(2);
-            console.log(idErrorCount)
+            console.log('id : ',idErrorCount)
           }
         }
       }, [signIdError, isInfo, idErrorCount]);
@@ -148,10 +146,10 @@ const Login = () => {
         if (isInfo) {
           if (signPwdError === '비밀번호는 8~16자의 영문 대 소문자, 숫자, 특수문자를 사용해야 합니다.') {
             setPwdErrorCount(1);
-            console.log(pwdErrorCount)
+            console.log('pwd : ' ,pwdErrorCount)
           } else if (signPwdError === '') {
             setPwdErrorCount(2);
-            console.log(pwdErrorCount)
+            console.log('pwd : ' ,pwdErrorCount)
           }
         }
       }, [signPwdError, isInfo, pwdErrorCount]);
@@ -160,32 +158,37 @@ const Login = () => {
         if (isInfo) {
           if (confirmPassP === '비밀번호와 비밀번호 확인이 일치하지 않습니다.') {
             setPwd1ErrorCount(1);
-            console.log(pwd1ErrorCount)
+            console.log('pwd1 : ',pwd1ErrorCount)
           } else if (confirmPassP === '') {
             setPwd1ErrorCount(2);
-            console.log(pwd1ErrorCount)
+            console.log('pwd1 : ',pwd1ErrorCount)
           }
         }
       }, [confirmPassP, isInfo, pwd1ErrorCount]);
 
-    useEffect(() => {
-        if (idErrorCount=== 1) {
-            setFormSize(prevSize => prevSize + 50)
-        } else if (idErrorCount === 2) {
-            setFormSize(prevSize => prevSize - 50)
-        }
-        if (pwdErrorCount=== 1) {
-            setFormSize(prevSize => prevSize + 50)
-        } else if (pwdErrorCount === 2) {
-            setFormSize(prevSize => prevSize - 50)
-        }
-        if (pwd1ErrorCount=== 1) {
-            setFormSize(prevSize => prevSize + 50)
-        } else if (pwd1ErrorCount === 2) {
-            setFormSize(prevSize => prevSize - 50)
+    /*useEffect(() => {
+        if (isInfo) {
+            if (idErrorCount=== 1) {
+                setFormSize(prevSize => Math.min(prevSize + 50, 750));
+            } else if (idErrorCount === 2) {
+                setFormSize(prevSize => Math.max(prevSize - 50, 600));
+            }
+
+            if (pwdErrorCount=== 1) {
+                setFormSize(prevSize => Math.min(prevSize + 50, 750));
+            } else if (pwdErrorCount === 2) {
+                setFormSize(prevSize => Math.max(prevSize - 50, 600));
+            }
+
+            if (pwd1ErrorCount=== 1) {
+                setFormSize(prevSize => Math.min(prevSize + 50, 750));
+            } else if (pwd1ErrorCount === 2) {
+                setFormSize(prevSize => Math.max(prevSize - 50, 600));
+            }
+
         }
 
-    },[idErrorCount, pwdErrorCount, pwd1ErrorCount])
+    },[isInfo, idErrorCount, pwdErrorCount, pwd1ErrorCount])*/
 
 
     const handleSignUpChange = (e) => {

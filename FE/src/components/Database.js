@@ -14,6 +14,7 @@ const Database = () => {
 
     useEffect(() => {
         fetch("http://10.125.121.221:8080/getdalog")
+        //fetch('http://bottle4.iptime.org:8080/getdalog')
             .then(response => response.json())
             .then(json => setData(json))
     }, []);
