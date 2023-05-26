@@ -5,10 +5,9 @@
     flex-wrap: wrap;
 }
 
-.pointBox, .myInfoBox, .bottleInfoBox, .tableBox {
+.tableBox {
     box-sizing: border-box;
     width: 60%;
-    height: 200px;
     margin: 100px 20px -50px 50px;
     
     
@@ -24,15 +23,6 @@
 .pointBox {
     background: rgb(0, 128, 255);
     color: white;
-}
-
-.bottleInfoBox {
-    height: 400px;
-}
-
-.tableBox {
-    height: 400px;
-
 }
 
 .imgupbutton {

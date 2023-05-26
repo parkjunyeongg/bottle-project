@@ -37,7 +37,7 @@ return(
                             </tr>
                         </thead>
                         <tbody>
-                            {Array.from({ length: Math.max(10, lastData.length) }).map((_, index) => {
+                            {Array.from({ length: Math.max(20, lastData.length) }).map((_, index) => {
                             const item = lastData[index];
                             return (
                             <tr key={index}>
@@ -50,6 +50,10 @@ return(
                         })}
                         </tbody>
                         </table>
+
+                    </div>
+                    <div>
+                        <button className="imgupbutton" onClick={goImg}> 이미지 업로드 </button>
                     </div>
             </div>
         </div>
