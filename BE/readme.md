@@ -2,14 +2,14 @@ Ubuntu 20.04 LTS 환경설정
 =============
 
 # DDNS
-* kshnx2.iptime.org
+* bottle4.iptime.org
 
 # PORT
 * 22 : ssl, sftp
 * 8080 : tomcat
-* 3000 : react
+* 80 : react
 * 3306 : mariadb
-* 5000 : flask
+* 55000 : flask
 * 30000 : 공유기설정
 
 # Python
@@ -19,6 +19,7 @@ Ubuntu 20.04 LTS 환경설정
 - ## Python 문제
   - python 내장 flask로는 정상동작 확인하였으나 외부 flask 사용시 에러발생
   - yolov5 설치에러 해결중 
+- 외부 flask 서버를 배치함으로 해결함
 
 # JAVA
 - OpenJDK 1.8
