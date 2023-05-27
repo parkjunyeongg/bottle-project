@@ -1,6 +1,7 @@
 # bottle-project
-K-digital-02 bottle identification project
-
+- http://bottle4.iptime.org
+- 현재 구현된기능 : 이미지분석, 게시판조회
+- K-digital-02 bottle identification project
 # You should read it first...
 
 1. 병 판별 데이터 분석 및 웹 서비스 구축 기획안 : https://docs.google.com/document/d/1MNx_ZBxme7EzghV2o5YCM3HD9PrhmfMrc4ZL8C719ng/edit?usp=sharing

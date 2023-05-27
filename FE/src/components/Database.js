@@ -13,7 +13,8 @@ const Database = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch("http://kshnx2.iptime.org:8080/getMember")
+        fetch("http://10.125.121.221:8080/getdalog")
+        //fetch('http://bottle4.iptime.org:8080/getdalog')
             .then(response => response.json())
             .then(json => setData(json))
     }, []);
@@ -31,21 +32,26 @@ const Database = () => {
                 <th>작성자</th>
                 <th>종류</th>
                 <th>좌표</th>
-                <th>성공유무</th>
-                <th>퍼센트</th>
+                <th>좌표</th>
+                <th>좌표</th>
+                <th>좌표</th>
+                <th>인식률</th>
             </tr>
           </thead>
           <tbody>
             {Array.from({ length: Math.max(20, data.length) }).map((_, index) => {
             const item = data[index];
+            
             return (
             <tr key={index}>
-              <td>{item?.member_date}</td>
-              <td>{item?.member_id}</td>
-              <td>{item?.member_name}</td>
-              <td>{item?.member_email}</td>
-              <td>{item?.member_bottle}</td>
-              <td>{item?.member_persent}</td>
+              <td>{item?.createdDate}</td>
+              <tb></tb>
+              <td>{item?.name}</td>
+              <td>{item?.x_min}</td>
+              <td>{item?.x_max}</td>
+              <td>{item?.y_min}</td>
+              <td>{item?.y_max}</td>
+              <td>{item?.confidence}</td>
             </tr>
             );
           })}
