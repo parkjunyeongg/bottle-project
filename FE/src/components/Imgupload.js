@@ -15,8 +15,8 @@ const Imgupload = () => {
         formData.append('file', file);
         
         //10.125.121.228:8080/upload
-        fetch('http://10.125.121.221:8080/upload', {
-        //fetch('http://bottle4.iptime.org:8080/upload', {      //이미지 업로드
+        //fetch('http://10.125.121.221:8080/upload', { //로컬
+        fetch('http://bottle4.iptime.org:8080/upload', { //배포      //이미지 업로드
           method: 'POST',
           body : formData,
         })
@@ -76,12 +76,12 @@ return(
             {!imageUp && <div className="imgspace">
                 <div className="textspace">
                     <h3>유의사항</h3>
-                    <p>내용</p>
+                    <p>병 사진만 업로드 해주세요.</p>
                 </div>
-                <div className="labelspace">
+                {/*<div className="labelspace">
                     <h3>label 추가</h3>
                     <p>내용</p>
-                </div> 
+                </div> */}
                 <div className="imgbutton">
                     <input type="file" id = "input-file" onChange={saveImgFile} style={{display: 'none'}} />
                     <label className="input-file-button" htmlFor="input-file" id = "loadbutton"> 사진 올리기 </label>
