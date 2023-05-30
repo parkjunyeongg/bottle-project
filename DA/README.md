@@ -1,5 +1,5 @@
 # Bottle_Project_DA
-- 병 판별 프로젝트를 수행하며 배운 데이터 분석 관련 모델과 코드를 모아 놓았습니다. 아직 난잡한 코드가 많습니다.
+- 병 판별 프로젝트 관련 데이터 분석 관련 모델과 코드를 모아 놓았습니다.
 - 기획서 docs : https://docs.google.com/document/d/1MNx_ZBxme7EzghV2o5YCM3HD9PrhmfMrc4ZL8C719ng/edit?usp=sharing
 ## 실행방법
 ### 가상환경 및 모델학습에 사용한 버전
@@ -45,7 +45,8 @@ pip3 install torch torchvision torchaudio
 - Week03 : 모델 구축을 위한 기초 이미지 수집
 - Week04 : 모델 학습을 위한 이미지 전처리
 - Week05 : 간단한 이미지 판별 모델 생성 및 훈련
-- Week06 : 모델 정확도 업데이트 예정
+- Week06 : 모델 정확도 향상을 위한 이미지 전처리 및 모델 구성 업데이트
+- Week07 : yolov5 모델 커스텀을 통한 병 판별 업데이트
 
 ### ToDo
 
