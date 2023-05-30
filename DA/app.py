@@ -2,6 +2,7 @@ import io
 import os
 import base64
 import yolov5
+import shutil
 import torch
 
 from flask import Flask, request, jsonify
@@ -45,6 +46,8 @@ def predict():
             },
             'bbox': results.pandas().xyxy[0].to_dict('records')
         }
+        # 결과 폴더 삭제
+        shutil.rmtree(RESULTS_DIR)
         return jsonify(response_data)
 
     except ValueError as e:

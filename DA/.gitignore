@@ -633,8 +633,8 @@ $RECYCLE.BIN/
 *.lnk
 
 # 사용자 지정
-data/
-results/
 *.csv
+/results
+/data
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,linux,macos,visualstudiocode,intellij,python,venv,java,node,react,eclipse
