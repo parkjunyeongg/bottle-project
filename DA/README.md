@@ -34,6 +34,8 @@ pip3 install torch torchvision torchaudio
 
 ### 코드 설명
 - app.py = 모델 실행(이미지를 넣으면 판별한 이미지와 bbox 값을 반환)
+- app copy.py = 커스텀 모델 실행(작성중)
+- testmodel.py = 커스텀 모델 코드
 - cuda.py = cuda 실행 테스트(방법은 공부중)
 - test01.py = yolov5 테스트
 - work01.py = 이미지 분류 코드(data 폴더의 sample_image와 sample_json의 파일들을 preprocessed_image와 preprocessed_json에 정리)
