@@ -13,6 +13,7 @@ const Mainbar =() => {
     const gohome= () => {
         movePage('');
     }
+    
     const goImg = () =>  {
         movePage('/imgupload');
     }
@@ -31,12 +32,16 @@ const Mainbar =() => {
 
     const handleShowNav = () => {
         if (isFormSize === 47) {
-            setFormSize(150)
-            setTimeout(() => {
-                setShowNav(!showNav);
-                setSignOpacity(1)
-            }, 150);
-            
+            if (window.innerWidth > 530) {
+                setFormSize(150)
+            } else {
+                setFormSize(100)
+            }
+                setTimeout(() => {
+                    setShowNav(!showNav);
+                    setSignOpacity(1)
+                }, 150);
+
         } else {
             setShowNav(!showNav);
             setSignOpacity(0)
@@ -48,7 +53,7 @@ const Mainbar =() => {
       };
 
       const handleResize = () => {
-        if (window.innerWidth >= 886) {
+        if (window.innerWidth >= 1106) {
             setShowNav(!showNav);
             setSignOpacity(0)
             setTimeout(() => {

@@ -6,7 +6,7 @@ const Admin = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        fetch("http://kshnx2.iptime.org:8080/getMember")
+        fetch("http://bottle4.iptime.org:8080/getMember")
             .then(response => response.json())
             .then(json => setData(json))
     }, []);

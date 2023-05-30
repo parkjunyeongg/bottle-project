@@ -1,0 +1,16 @@
+.expanded {
+    transition: height 0.3s ease;
+    height: 150px; /* 확장될 행의 높이 */
+  }
+  
+  .expanded-row {
+    transition: opacity 0.3s ease, height 0.3s ease;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+  }
+  
+  .expanded .expanded-row {
+    opacity: 1;
+    height: auto;
+  }

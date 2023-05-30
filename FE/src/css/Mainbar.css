@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
 /*창 작아졌을때*/
-@media screen and (max-width: 962px) {
+@media screen and (max-width: 1105px) {
     .top-bar , .barmenu1 > button {
       display: none;
     }
@@ -9,7 +9,7 @@
       margin-top: 10px;
     }
     
-    @media (max-width: 962px) {
+    @media (max-width: 1105px) {
       .barmenu2 > .toggle-button {
         display: block;
       }
@@ -25,7 +25,7 @@
     }
   }
   /*창 커졌을때*/
-  @media (min-width: 963px) { 
+  @media (min-width: 1105px) { 
     .barmenu2 > .toggle-button , .hidenav > button{
       display: none;
     }
@@ -44,6 +44,21 @@
       border: none;
     }
   
+  }
+
+  @media (max-width: 530px) { /*모바일*/
+    .top-bar > .logogo{
+        font-size: 0.5em; 
+    }
+
+    .visible > button {
+      font-size: 0.5em;
+    }
+
+    .hidden > button {
+      font-size: 0.5em;
+    }
+
   }
 
   .visible {

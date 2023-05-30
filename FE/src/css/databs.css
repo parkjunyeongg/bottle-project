@@ -21,10 +21,6 @@ table {
     font-weight: bold;
   }
   
-  tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
   td, th {
     text-align: center;
     padding: 8px;
@@ -33,4 +29,19 @@ table {
   td {
     border-bottom: 1px solid #ddd;
   }
+
+  tbody tr {
+    transition: all 0.3s ease;
+  }
+  
+  tbody tr.expanded-row td {
+    max-height: 0;
+    overflow: hidden;
+  }
+  
+  tbody tr.expanded-row .row-content {
+    max-height: 500px; /* 원하는 크기로 설정 */
+    transition: max-height 0.3s ease;
+  }
+  
   

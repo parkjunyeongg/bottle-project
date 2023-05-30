@@ -31,20 +31,20 @@ const Database = () => {
                 }),
                 id: item.id,
               }));
-              setData(formattedData);
+              const reversedData = formattedData.reverse(); //역순 정렬 (최근기록부터)
+              setData(reversedData);
             });
         }, []);
 
           
         
-          const handleRowClick = (index) => {
+          const handleRowClick = (index) => {         //행클릭시 확장되며 이미지 출력
             setImageSrc(null);
-            if (expandedRow === index) {
-              // 이미 확장된 행을 클릭한 경우 닫음
+            if (expandedRow === index) {  // 이미 확장된 행을 클릭한 경우 닫음
               setExpandedRow(null);
             } else {
               setExpandedRow(index);
-              const item = data[index];
+              const item = data[index];        //id를 대칭하여 이미지 찾음
               if (item && item.id) {
                   loadImg(item.id);
               }

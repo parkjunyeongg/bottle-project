@@ -31,7 +31,20 @@
         align-items: center;
         font-size: 1.3em;
     }
+
+  
   }
+
+  @media (max-width: 630px) {
+      .project {
+        display: none;
+      }
+
+      .mproject {
+        display: block;
+      }
+    }
+
 
   .startbutton {
 
@@ -58,4 +71,21 @@
   .startbutton:hover {
     background-color: rgb(0, 128, 255);
     color: white
+}
+
+.mproject > h1{
+  color: white;
+  font-size: 1em;
+  margin: 0px auto 10px;
+  
+}
+
+.mproject {
+  text-align: center;
+  display: none;
+}
+
+.mproject > button {
+  display: flex;
+  justify-content: center;
 }

@@ -6,7 +6,6 @@ import Database from './Database';
 import Admin from './admin';
 import Mypage from './Mypage';
 import Home from './home';
-import Temp from './temp';
 
 const Bottleproject = () => {
 
@@ -24,7 +23,6 @@ return(
         <Route path="/imgupload" element={<Imgupload />}></Route>
         <Route path="/database" element={<Database />}></Route>
         <Route path="/admin" element={<Admin />}></Route>
-        <Route path="/testtemp" element={<Temp />}></Route>
     </Routes>
 
     </>
