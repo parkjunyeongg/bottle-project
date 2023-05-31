@@ -8,9 +8,10 @@ const Database = () => {
     const [expandedRow, setExpandedRow] = useState(null); //표 확장 확인 state
     const [imageSrc, setImageSrc] = useState(''); //이미지 src state 
 
-    useEffect(() => {                                               //db불러오기
+    useEffect(() => {                   
+      fetch('http://bottle4.asuscomm.com:8080/getdalog')                            //db불러오기
         //fetch("http://10.125.121.221:8080/getdalog")
-        fetch('http://bottle4.iptime.org:8080/getdalog')
+        //fetch('http://bottle4.iptime.org:8080/getdalog')
             .then(response => response.json())
             .then(json => {
               const formattedData = json.map((item) => ({
@@ -52,7 +53,7 @@ const Database = () => {
           };
 
           const loadImg = (pictureValue) => {
-            const url = `http://bottle4.iptime.org:8080/download/picture=${pictureValue}`;
+            const url = `http://bottle4.asuscomm.com:8080/download/picture=${pictureValue}`;
           
             fetch(url)
               .then(response => response.blob())

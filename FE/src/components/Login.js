@@ -20,6 +20,7 @@ const Login = () => {
 
     const [idError,setIdError] = useState(false);    // id,pw미입력 확인 state
     const [pwError,setPwError] = useState(false);
+
     const [signIdError, setSignIdError] = useState('');  //회원가입 조건 에러
     const [signPwdError, setSignPwdError] = useState('');
 
@@ -49,11 +50,9 @@ const Login = () => {
         const { id, pw } = loginData;
         if (!id){
                 setPwError(false)
-                setFormSize(400)
                 setIdError(true)
         } else if (!pw) {
                 setIdError(false)
-                setFormSize(400)
                 setPwError(true)
         } else {
               /*fetch("/login", {

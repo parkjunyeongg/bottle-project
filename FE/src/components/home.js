@@ -21,13 +21,6 @@ return(
                     자동 판별 서비스의 제공입니다.</h1>
                     <button className="startbutton" onClick={goLogin}> 시작 </button>
             </div>
-            <div className="mproject">
-            <h1>빈 병 자원 순환 프로그램의<br/>
-                빈 병 종류, 크기 및 파손 정도<br/>
-                자동 판별 서비스의 제공입니다.</h1>
-            <button className="startbutton" onClick={goLogin}> 시작 </button>
-
-        </div>
         </div>
         
         
