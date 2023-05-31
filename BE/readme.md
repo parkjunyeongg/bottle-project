@@ -3,6 +3,12 @@ Ubuntu 20.04 LTS 환경설정
 
 # DDNS
 * bottle4.iptime.org
+* bottle4.asuscomm.com
+
+#VPN 
+* PPTP
+* Gateway 192.168.1.1
+* Local ip 192.168.1.2
 
 # PORT
 * 22 : ssl, sftp
@@ -10,7 +16,6 @@ Ubuntu 20.04 LTS 환경설정
 * 80 : react
 * 3306 : mariadb
 * 55000 : flask
-* 30000 : 공유기설정
 
 # Python
 - 우분투에서 지원하는 파이썬 버전은 3.8이나 - yolov5를 위해 3.10.10으로 업그레이드 

@@ -1,5 +1,5 @@
 # bottle-project
-- http://bottle4.iptime.org
+- http://bottle4.asuscomm.com
 - 현재 구현된기능 : 이미지분석, 게시판조회
 - K-digital-02 bottle identification project
 # You should read it first...
