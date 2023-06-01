@@ -8,13 +8,21 @@ const Database = () => {
     const [expandedRow, setExpandedRow] = useState(null); //표 확장 확인 state
     const [imageSrc, setImageSrc] = useState(''); //이미지 src state 
 
-    useEffect(() => {                   
-      fetch('http://bottle4.asuscomm.com:8080/getdalog')                            //db불러오기
+    const [isPageNumber, setPageNumber] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [isMaxPage, setMaxPage] = useState('');
+    const [pageInfo, setPageInfo] = useState(0);
+
+    useEffect(() => {           
+      const pageUrl = `http://bottle4.asuscomm.com:8080/getdalogpage?page=${isPageNumber}&size=15 `
+      fetch(pageUrl)     
+      //fetch('http://bottle4.asuscomm.com:8080/getdalog')                            //db불러오기
         //fetch("http://10.125.121.221:8080/getdalog")
-        //fetch('http://bottle4.iptime.org:8080/getdalog')
             .then(response => response.json())
             .then(json => {
-              const formattedData = json.map((item) => ({
+              const { content, totalPages } = json; // 페이지에 띄울 데이터 배열과 총 페이지 수
+
+              const formattedData = content.map((item) => ({
                 ...item,
                 x_min: parseFloat(item.x_min).toFixed(3),
                 x_max: parseFloat(item.x_max).toFixed(3),
@@ -32,12 +40,19 @@ const Database = () => {
                 }),
                 id: item.id,
               }));
-              const reversedData = formattedData.reverse(); //역순 정렬 (최근기록부터)
-              setData(reversedData);
-            });
-        }, []);
 
-          
+              setData(formattedData);
+              setPageInfo({ totalPages });
+            })
+        }, [isPageNumber]);
+
+        const handleNextPage = () => {
+          setCurrentPage(currentPage + 1);
+        };
+      
+        const handlePreviousPage = () => {
+          setCurrentPage(currentPage - 1);
+        };
         
           const handleRowClick = (index) => {         //행클릭시 확장되며 이미지 출력
             setImageSrc(null);
@@ -106,8 +121,36 @@ const Database = () => {
               ))}
           </tbody>
         </table>
-      </div>
-      </form>
+    </div>
+    {pageInfo && (
+        <div>
+          {/* 이전 버튼 */}
+          {currentPage > 1 && (
+            <button onClick={handlePreviousPage}>이전</button>
+          )}
+
+          {/* 페이지 번호 */}
+          {Array.from({ length: Math.min(pageInfo.totalPages, 10) }).map((_, index) => {
+            const pageNumber = (currentPage - 1) * 10 + index + 1;
+            if (pageNumber > pageInfo.totalPages) return null;
+            return (
+              <button
+                key={index}
+                onClick={() => setCurrentPage(pageNumber)}
+                disabled={currentPage === pageNumber}
+              >
+                {pageNumber}
+              </button>
+            );
+          })}
+
+          {/* 다음 버튼 */}
+          {currentPage < pageInfo.totalPages && (
+            <button onClick={handleNextPage}>다음</button>
+          )}
+        </div>
+      )}
+    </form>
         );
     }
                 

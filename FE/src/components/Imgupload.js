@@ -14,10 +14,8 @@ const Imgupload = () => {
         const formData = new FormData();
         formData.append('file', file);
         
-        //10.125.121.228:8080/upload
-        fetch('http://bottle4.asuscomm.com:8080/upload', { //로컬
-        //fetch('http://10.125.121.228:8080/upload', { //로컬
-        //fetch('http://bottle4.iptime.org:8080/upload', { //배포      //이미지 업로드
+        fetch('http://bottle4.asuscomm.com:8080/upload', { //로컬/배포      //이미지 업로드
+        //fetch('http://10.125.121.221:8080/upload', { //테스트      
           method: 'POST',
           body : formData,
         })
