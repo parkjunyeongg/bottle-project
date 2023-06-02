@@ -10,6 +10,8 @@
 
 3. 병 판별 데이터 분석 및 웹 서비스 화면 상세 설계서 : https://docs.google.com/document/d/1CUiWeUYGTQhbvvTxv4pECfqIYupVd3BeXT3IinvuzUI/edit#heading=h.1sbrum4kcsjp
 
+4. 병 판별 데이터 분석 및 웹 서비스 데이터셋 및 모델 분석 : https://github.com/KimSangWook57/Bottle_Project_DA/blob/main/notebooks/report.ipynb
+
 ## 구조
 - DA, 데이터 분석 관련
 - FE, 사용자 입력 및 시각화 관련
