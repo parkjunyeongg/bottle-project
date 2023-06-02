@@ -1,3 +1,10 @@
+# System Architecture
+![시스템 설계도](https://github.com/parkjunyeongg/bottle-project/assets/122770606/f0f29fbd-0991-4639-9d80-715a8bdbe3e1)
+
+# Spring Boot Class Diagram
+![github](https://github.com/parkjunyeongg/bottle-project/assets/122770606/38e79c12-0cf1-4499-a91b-bae797e1f4a1)
+
+
 Ubuntu 20.04 LTS 환경설정
 =============
 
