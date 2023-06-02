@@ -1,5 +1,5 @@
 # System Architecture
-![시스템 설계도](https://github.com/parkjunyeongg/bottle-project/assets/122770606/f0f29fbd-0991-4639-9d80-715a8bdbe3e1)
+![병 판별 데이터 분석 및 웹 서비스 설계서](https://github.com/parkjunyeongg/bottle-project/assets/122770606/5a4696ae-9a71-4bc5-bb14-f972f2d7379b)
 
 # Spring Boot Class Diagram
 ![0602](https://github.com/parkjunyeongg/bottle-project/assets/122770606/9fe10031-42d4-4346-bd4d-9c71a4d88819)
