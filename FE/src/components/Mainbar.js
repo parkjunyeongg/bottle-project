@@ -27,7 +27,11 @@ const Mainbar =() => {
     }
     
     const goMy = () => {
-        movePage('/mypage')
+        movePage('/mypage');
+    }
+
+    const goManager = () => {
+        movePage('/adminlog');
     }
 
     const handleShowNav = () => {
@@ -79,12 +83,14 @@ return(
         <div className="barmenu1">
             <button onClick={goImg}> 이미지 업로드 </button>
             <button onClick={goData}> 전체 이미지 인식 내역 </button>
-            <button onClick={goMy}> 나의 내역 </button>
+            {/*<button onClick={goMy}> 나의 내역 </button>*/}
+            <button onClick={goManager}> 관리자 </button>
         </div>
         <div className={`hidenav ${showNav ? 'visible' : 'hidden'}`} style={{ opacity :`${isSignOpacity}`}}>
             <button onClick={goImg}> 이미지 업로드</button>
             <button onClick={goData}> 전체 이미지 인식 내역 </button>
-            <button onClick={goMy}> 나의 내역 </button>
+            {/*<button onClick={goMy}> 나의 내역 </button>*/}
+            <button onClick={goManager}> 관리자 </button>
         </div>
         <div className="barmenu2">
             <button onClick={goLogin}> <img alt="loginimg" src="/img/login3030.png" /> </button>
