@@ -1,5 +1,7 @@
-# Spring Boot Class Diagram
+# System Architecture
+![0602](https://github.com/parkjunyeongg/bottle-project/assets/122770606/584fff41-7c62-4564-ad85-a30dc80b5b1b)
 
+# Spring Boot Class Diagram
 ![github](https://github.com/parkjunyeongg/bottle-project/assets/122770606/38e79c12-0cf1-4499-a91b-bae797e1f4a1)
 
 
