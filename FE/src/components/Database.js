@@ -12,6 +12,8 @@ const Database = () => {
     const [pageSize, setPageSize] = useState(15);
     const [pageInfo, setPageInfo] = useState(0);
 
+   
+
     useEffect(() => {           
       const pageUrl = `http://bottle4.asuscomm.com:8080/getdalogpage?page=${pageNumber}&size=${pageSize} `
       fetch(pageUrl)     
@@ -67,17 +69,33 @@ const Database = () => {
         };
 
         const handlePreviousPage = (event) => {
-          event.preventDefault()
+          event.preventDefault();
           setExpandedRow(null);
-          const previousPage = Math.max(pageNumber - 10, 0);
-          setPageNumber(previousPage);
-        };
       
+          const previousPage = Math.floor((pageNumber) / 10) * 10;
+          if (previousPage > 0) {
+              setPageNumber(previousPage-1);
+            } else {
+              setPageNumber(0);
+          };
+        }
+
         const handleNextPage = (event) => {
-          event.preventDefault()
+          event.preventDefault();
           setExpandedRow(null);
-          const nextPage = Math.min(pageNumber + 10, pageInfo.totalPages - 1);
-          setPageNumber(nextPage);
+        
+          // 현재 페이지 범위 계산
+          const currentPageRange = Math.floor((pageNumber ) / 10); // 현재 페이지 범위 (0부터 시작)
+          const maxPageRange = Math.floor((pageInfo.totalPages - 1) / 10); // 최대 페이지 범위
+        
+          if (currentPageRange < maxPageRange) {
+            // 다음 페이지 범위가 존재하는 경우
+            const nextPage = (currentPageRange + 1) * 10; // 다음 페이지 범위의 첫 페이지
+            setPageNumber(nextPage);
+          } else {
+            // 다음 페이지 범위가 없는 경우, 마지막 페이지로 이동
+            setPageNumber(pageInfo.totalPages - 1);
+          }
         };
 
 
@@ -105,7 +123,11 @@ const Database = () => {
                 setImageSrc(objectUrl);
               });
           };
-      
+    
+          const currentPageRangeStart = Math.floor(pageNumber / 10) * 10 + 1;
+          const currentPageRangeEnd = currentPageRangeStart + 9;
+          const isLastPageRange = currentPageRangeEnd >= pageInfo.totalPages;
+
     return(
       
       <form className="dataform">
@@ -154,26 +176,31 @@ const Database = () => {
     
     {/* 페이징 UI */}
     {pageInfo && (
-        <div>
+        <div className="pagebar">
           {/* 이전 페이지 */}
-          {pageNumber > 0 && (
-            <button onClick={handlePreviousPage}>이전</button>
+          {pageNumber > 9 && (
+            <button className="nextbutton" onClick={handlePreviousPage}>이전</button>
           )}
 
           {/* 페이지 번호 */}
-          {getPageNumbers().map((page) => (
+          {getPageNumbers().map((page) => {
+          const buttonClasses = pageNumber === page - 1 ? "active-button" : "inactive-button";
+
+          return (
             <button
               key={page}
               onClick={() => handlePageChange(page - 1)}
               disabled={pageNumber === page - 1}
+              className={buttonClasses}
             >
               {page}
             </button>
-          ))}
+          );
+        })}
 
           {/* 다음 페이지 */}
-          {pageNumber < pageInfo.totalPages - 1 && (
-            <button onClick={handleNextPage}>다음</button>
+          {!isLastPageRange &&  (
+            <button className="nextbutton" onClick={handleNextPage}>다음</button>
           )}
         </div>
       )}
