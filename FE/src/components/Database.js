@@ -1,16 +1,19 @@
+import '../../src/css/database.css';
 import React, { useState, useEffect } from 'react';
 
 const Database = () => {
     //로그 시간,위치 제일중요
     //이미지 판별된 순간 바로 실시간 로그 갱신
 
-    const [ data, setData] = useState([]); //boot에서 불러온 data를 넣음
+    const [data, setData] = useState([]); //boot에서 불러온 data를 넣음
     const [expandedRow, setExpandedRow] = useState(null); //표 확장 확인 state
     const [imageSrc, setImageSrc] = useState(''); //이미지 src state 
 
     const [pageNumber, setPageNumber] = useState(0);
     const [pageSize, setPageSize] = useState(15);
     const [pageInfo, setPageInfo] = useState(0);
+
+    const [searchState, setSearchState] = useState('');
 
    
 
@@ -25,10 +28,10 @@ const Database = () => {
 
               const formattedData = content.map((item) => ({
                 ...item,
-                x_min: parseFloat(item.x_min).toFixed(3),
-                x_max: parseFloat(item.x_max).toFixed(3),
-                y_min: parseFloat(item.y_min).toFixed(3),
-                y_max: parseFloat(item.y_max).toFixed(3),
+                x_min: parseFloat(item.x_min).toFixed(0),
+                x_max: parseFloat(item.x_max).toFixed(0),
+                y_min: parseFloat(item.y_min).toFixed(0),
+                y_max: parseFloat(item.y_max).toFixed(0),
                 name: item.name,
                 confidence: (parseFloat(item.confidence) * 100).toFixed(0) + '%',
                 createdDate: new Date(item.createdDate).toLocaleString(undefined, {
@@ -128,6 +131,10 @@ const Database = () => {
           const currentPageRangeEnd = currentPageRangeStart + 9;
           const isLastPageRange = currentPageRangeEnd >= pageInfo.totalPages;
 
+          const searchButton = () => {
+            
+          }
+
     return(
       
       <form className="dataform">
@@ -139,8 +146,8 @@ const Database = () => {
                 <th>작성자</th>
                 <th>종류</th>
                 <th>x_min</th>
-                <th>x_max</th>
                 <th>y_min</th>
+                <th>x_max</th>
                 <th>y_max</th>
                 <th>인식률</th>
             </tr>
@@ -154,8 +161,8 @@ const Database = () => {
                   <td>익명</td>
                   <td>{item?.name}</td>
                   <td>{item?.x_min}</td>
-                  <td>{item?.x_max}</td>
                   <td>{item?.y_min}</td>
+                  <td>{item?.x_max}</td>
                   <td>{item?.y_max}</td>
                   <td>{item?.confidence}</td>
                 </tr>
@@ -179,7 +186,7 @@ const Database = () => {
         <div className="pagebar">
           {/* 이전 페이지 */}
           {pageNumber > 9 && (
-            <button className="nextbutton" onClick={handlePreviousPage}>이전</button>
+            <button className="nextbutton" onClick={handlePreviousPage}> {'<'} 이전 </button>
           )}
 
           {/* 페이지 번호 */}
@@ -200,10 +207,19 @@ const Database = () => {
 
           {/* 다음 페이지 */}
           {!isLastPageRange &&  (
-            <button className="nextbutton" onClick={handleNextPage}>다음</button>
+            <button className="nextbutton" onClick={handleNextPage}>다음 {'>'}</button>
           )}
         </div>
       )}
+      <div className="searchDiv">
+        <select name="choice">
+            <option value="banana">정렬</option>
+            <option value="apple">인식률 순</option>
+            <option value="orange">뭐할까</option>
+          </select>
+          <input type="text" name="searchBox" value={setSearchState} /> 
+          <button>검색</button>
+        </div>
     </form>
         );
     }

@@ -1,4 +1,3 @@
-import '../../src/css/databs.css';
 import { useState, useEffect } from 'react';
 
 const Admin = () => {
