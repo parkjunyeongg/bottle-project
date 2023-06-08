@@ -4,14 +4,16 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +28,7 @@ import com.example.demo.service.MemberService;
 
 @CrossOrigin("*")
 @RestController
+
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
@@ -52,14 +55,14 @@ public class MemberController {
 		memberService.updateMember(memberVO);
 	}
 
-	@PostMapping(value = "/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ArrayList<Object> saveFile(@RequestParam MultipartFile file) throws URISyntaxException  {
+	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ArrayList<Object> saveFile(@RequestParam MultipartFile file) throws URISyntaxException {
 
 		try {
 			return fileService.saveFile(file);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			 throw new RuntimeException("Failed to upload file", e);
+			throw new RuntimeException("Failed to upload file", e);
 		}
 	}
 
@@ -67,11 +70,22 @@ public class MemberController {
 	public ResponseEntity<byte[]> downFile() throws IOException {
 		return fileService.downFile();
 	}
-	
-	@GetMapping("getdalog")
+
+	@GetMapping("/download/picture={id}")
+	public ResponseEntity<byte[]> downFile(@PathVariable("id") Integer id) throws IOException {
+		return fileService.downFile(id);
+	}
+
+	@GetMapping("/getdalog")
 	public List<DA_LOG> getdaloglist() {
 		return fileService.getdaloglist();
 	}
 
-	
+	@GetMapping("/getdalogpage")
+	public Page<DA_LOG> getdalogpage(Pageable pageable) {
+		return fileService.getdalogpage(pageable);
+	}
+
+
+
 }
