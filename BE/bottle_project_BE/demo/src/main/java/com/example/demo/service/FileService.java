@@ -8,11 +8,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -26,10 +33,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.DA_LOG;
 import com.example.demo.domain.FileVO;
-import com.example.demo.domain.MemberVO;
 import com.example.demo.persistence.DALogRepo;
 import com.example.demo.persistence.FileRepo;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -76,24 +81,21 @@ public class FileService {
 //json 파싱
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.exchange(requestEntity, String.class);
-
-		response.getStatusCode();
+//		response.getStatusCode();
 		String jsonResponse = response.getBody();
-
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode rootNode = objectMapper.readTree(jsonResponse);
+
 // Parse image
 		JsonNode imageNode = rootNode.get("image");
-
 		String DAsavedfilename = "DA_" + fileVO.getSavedFileName();
 		String DAfilepath = DADir + DAsavedfilename;
 		TempDAfilepath = DAfilepath;
-		
+
 // 이미지 파일 저장
 		byte[] imageData = Base64.getDecoder().decode(imageNode.get("data").asText());
 
 		try {
-
 			Files.write(Paths.get(DAfilepath), imageData, StandardOpenOption.CREATE);
 		} catch (IOException e) {
 			System.out.println("이미지 저장 중 오류가 발생했습니다: " + e.getMessage());
@@ -102,9 +104,9 @@ public class FileService {
 		JsonNode bboxNode = rootNode.get("bbox");
 		if (bboxNode.isArray()) {
 			for (JsonNode bboxItemNode : bboxNode) {
-				DA_LOG daLog = new DA_LOG();				
+				DA_LOG daLog = new DA_LOG();
 				daLog.setSavedFileName(DAsavedfilename);
-				daLog.setOriginalFileName(fileVO.getSavedFileName());				
+				daLog.setOriginalFileName(fileVO.getSavedFileName());
 				daLog.setFilePath(DAfilepath);
 				daLog.setName(bboxItemNode.get("name").asText());
 				daLog.setConfidence(Double.toString(bboxItemNode.get("confidence").asDouble()));
@@ -123,12 +125,9 @@ public class FileService {
 
 // 파일 다운로드
 	public ResponseEntity<byte[]> downFile() throws IOException {
-
 		String filepath = TempDAfilepath;
 		Path imagePath = Paths.get(filepath);
-
 		byte[] imageBytes = Files.readAllBytes(imagePath);
-
 // 이미지 파일의 확장자에 따라 Content-Type 헤더를 동적으로 설정
 		String extension = StringUtils.getFilenameExtension(filepath);
 		MediaType mediaType = MediaType.IMAGE_JPEG;
@@ -140,10 +139,31 @@ public class FileService {
 		return ResponseEntity.ok().contentType(mediaType).body(imageBytes);
 	}
 
+	public ResponseEntity<byte[]> downFile(Integer id) throws IOException {
+		// TODO Auto-generated method stub
+
+		Path imagePath = Paths.get(dalogRepo.findById(id).get().getFilePath());
+
+		byte[] imageBytes = Files.readAllBytes(imagePath);
+
+		String extension = StringUtils.getFilenameExtension(imagePath.toString());
+		MediaType mediaType = MediaType.IMAGE_JPEG;
+		if ("png".equalsIgnoreCase(extension)) {
+			mediaType = MediaType.IMAGE_PNG;
+		} else if ("gif".equalsIgnoreCase(extension)) {
+			mediaType = MediaType.IMAGE_GIF;
+		}
+		return ResponseEntity.ok().contentType(mediaType).body(imageBytes);
+	}
 
 	public List<DA_LOG> getdaloglist() {
 		// TODO Auto-generated method stub
 		return (List<DA_LOG>) dalogRepo.findAll();
+	}
+
+	public Page<DA_LOG> getdalogpage(Pageable pageable) {
+		pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("ID").descending());
+		return dalogRepo.findAll(pageable);
 	}
 
 }
