@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { Line } from 'react-chartjs-2';
 
 const AdminLog = () => {
   const [data, setData] = useState([]);
-  const [pageInfo, setPageInfo] = useState(0);
+  const [confidenceData, setConfidenceData] = useState([]);
+  //const [pageInfo, setPageInfo] = useState(0);
 
     const [expandedRow, setExpandedRow] = useState(null); //표 확장 확인 state
     const [imageSrc, setImageSrc] = useState(''); //이미지 src state 
 
-    const [pageNumber, setPageNumber] = useState(0);
+    //const [pageNumber, setPageNumber] = useState(0);
     
   
 
@@ -45,12 +47,13 @@ const AdminLog = () => {
           id: item.id,
         };
       });
-
+      
       setData(formattedData);
-      setPageInfo({ totalPages });
+      //setPageInfo({ totalPages });
+      setConfidenceData(formattedData.map((item) => parseFloat(item.confidence)));
 
     };
-
+    
     // 컴포넌트 언마운트 시 웹소켓 연결 종료
     return () => {
       socket.close();
@@ -137,6 +140,15 @@ const AdminLog = () => {
   const currentPageRangeEnd = currentPageRangeStart + 9;
   const isLastPageRange = currentPageRangeEnd >= pageInfo.totalPages;*/
   
+  const graphData = {
+    datasets: [
+      {
+        label: 'Confidence',
+        data: confidenceData,
+      },
+    ],
+  };
+  
   return (
     <form className="dataform">
       <h1>Log Display</h1>
@@ -156,7 +168,7 @@ const AdminLog = () => {
       </thead>
       <tbody>
 
-      {data.map((item, index) => (
+      {data.map((item, index) => ( 
           <React.Fragment key={index}>
             <tr onClick={() => handleRowClick(index)}>
               <td>{item?.createdDate}</td>
@@ -210,6 +222,11 @@ const AdminLog = () => {
       )}
     </div>
   )}*/}
+
+  <div className="visualization">
+     {/* 그래프 컴포넌트 */}
+     <Line data={graphData} />
+  </div>
 </form>
   );
 }

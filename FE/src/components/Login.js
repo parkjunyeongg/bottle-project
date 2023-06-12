@@ -1,6 +1,6 @@
 import '../../src/css/Login.css';
 import Mainbar from './Mainbar';
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
 //로컬 "proxy": "http://10.125.121.221:8080",

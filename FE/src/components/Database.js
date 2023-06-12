@@ -10,14 +10,18 @@ const Database = () => {
     const [imageSrc, setImageSrc] = useState(''); //이미지 src state 
 
     const [pageNumber, setPageNumber] = useState(0);
-    const [pageSize, setPageSize] = useState(15);
+    //const [pageSize, setPageSize] = useState(15);
     const [pageInfo, setPageInfo] = useState(0);
 
-    const [searchState, setSearchState] = useState('');
+    const [doSort, setDoSort] = useState(false);
+
+    let pageSize = 15;
+    
 
    
 
-    useEffect(() => {           
+    useEffect(() => {  
+      if (doSort===false) {
       const pageUrl = `http://bottle4.asuscomm.com:8080/getdalogpage?page=${pageNumber}&size=${pageSize} `
       fetch(pageUrl)     
       //fetch('http://bottle4.asuscomm.com:8080/getdalog')                            //db불러오기
@@ -48,7 +52,8 @@ const Database = () => {
               setData(formattedData);
               setPageInfo({ totalPages });
             })
-        }, [pageNumber, pageSize]);
+          }
+        }, [pageNumber, doSort, pageSize]);
 
 
 
@@ -130,10 +135,66 @@ const Database = () => {
           const currentPageRangeStart = Math.floor(pageNumber / 10) * 10 + 1;
           const currentPageRangeEnd = currentPageRangeStart + 9;
           const isLastPageRange = currentPageRangeEnd >= pageInfo.totalPages;
+          
 
-          const searchButton = () => {
+          const [selectedOption, setSelectedOption] = useState('');                          //select 관리 
+          const [showAdditionalSelect, setShowAdditionalSelect] = useState(false);
+          const [sortSelect, setSortSelect] = useState('');
+
+          const handleOptionChange = (event) => {           //첫번째 select
+            const selectedValue = event.target.value;
+            setSelectedOption(selectedValue);
+            setShowAdditionalSelect(selectedValue === 'specificOption');
+          };
+
+          const handleSortChange = (event) => {
+            const selectedValue = event.target.value;
+            setDoSort(true);
+            console.log(selectedValue);
+            setSortSelect(selectedValue);
+            setPageNumber(0)
+            
             
           }
+
+          useEffect(() => {
+            if (doSort===true) {
+            const pageUrl = `http://bottle4.asuscomm.com:8080/getdalogname?size=${pageSize}&name=${sortSelect}&page=${pageNumber}`
+            console.log(pageUrl);
+            fetch(pageUrl)
+            //fetch('http://bottle4.asuscomm.com:8080/getdalog')                            //db불러오기
+              //fetch("http://10.125.121.221:8080/getdalog")
+                  .then(response => response.json())
+                  .then(json => {
+                    const { content, totalPages } = json; // 페이지에 띄울 데이터 배열과 총 페이지 수
+      
+                    const formattedData = content.map((item) => ({
+                      ...item,
+                      x_min: parseFloat(item.x_min).toFixed(0),
+                      x_max: parseFloat(item.x_max).toFixed(0),
+                      y_min: parseFloat(item.y_min).toFixed(0),
+                      y_max: parseFloat(item.y_max).toFixed(0),
+                      name: item.name,
+                      confidence: (parseFloat(item.confidence) * 100).toFixed(0) + '%',
+                      createdDate: new Date(item.createdDate).toLocaleString(undefined, {
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        second: 'numeric',
+                      }),
+                      id: item.id,
+                    }));
+      
+                    setData(formattedData);
+                    setPageInfo({ totalPages });
+                  })
+                  if (sortSelect==="") {
+                    setDoSort(false)
+                  } 
+                }
+          },[pageNumber, pageSize, sortSelect, doSort])
 
     return(
       
@@ -212,13 +273,18 @@ const Database = () => {
         </div>
       )}
       <div className="searchDiv">
-        <select name="choice">
-            <option value="banana">정렬</option>
-            <option value="apple">인식률 순</option>
-            <option value="orange">뭐할까</option>
-          </select>
-          <input type="text" name="searchBox" value={setSearchState} /> 
-          <button>검색</button>
+        <select name="SortChoice" value={selectedOption} onChange={handleOptionChange}> 
+            <option value="">정렬</option>
+            <option value="confidence">인식률</option>
+            <option value="specificOption">종류</option>
+        </select>
+        {showAdditionalSelect && (
+        <select value={sortSelect} onChange={handleSortChange}>
+          <option value=""></option>
+          <option value="glass" >glass</option>
+          <option value="plastic" >plastic</option>
+        </select>
+      )}
         </div>
     </form>
         );
