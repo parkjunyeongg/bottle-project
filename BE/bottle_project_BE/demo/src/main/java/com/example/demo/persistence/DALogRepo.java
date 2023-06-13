@@ -18,5 +18,7 @@ public interface DALogRepo extends JpaRepository<DA_LOG, Integer> {
 
 	Page<DA_LOG> findBycreatedDateBetween(LocalDateTime start, LocalDateTime end, Pageable pageable);
 
+	Page<DA_LOG> findByconfidenceBetween(String start, String end, Pageable pageable);
+
 
 }

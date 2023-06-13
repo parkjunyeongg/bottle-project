@@ -101,4 +101,11 @@ public class MemberController {
 			@RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
 		return fileService.getdalogfindname(pageable, start, end);
 	}
+	
+	@GetMapping("/getdalogconfidence")
+	public Page<DA_LOG> getdalogconfidence(Pageable pageable,
+			@RequestParam("start") String start,
+			@RequestParam("end") String end) {
+		return fileService.getdalogfindconfidence(pageable, start, end);
+	}
 }

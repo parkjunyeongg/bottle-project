@@ -185,6 +185,12 @@ public class FileService {
 		return dalogRepo.findBycreatedDateBetween(start, end, pageable);
 	}
 
+	public Page<DA_LOG> getdalogfindconfidence(Pageable pageable, String start, String end) {
+		// TODO Auto-generated method stub
+		pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("ID").descending());
+		return dalogRepo.findByconfidenceBetween(start, end, pageable);
+	}
+
 	
 
 }
