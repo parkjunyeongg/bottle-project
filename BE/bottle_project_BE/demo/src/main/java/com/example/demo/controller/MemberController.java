@@ -2,12 +2,16 @@ package com.example.demo.controller;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.convert.JodaTimeConverters.LocalDateTimeToJodaLocalDateTime;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -86,6 +90,15 @@ public class MemberController {
 		return fileService.getdalogpage(pageable);
 	}
 
+	@GetMapping("/getdalogname")
+	public Page<DA_LOG> getdalogname(Pageable pageable, String name) {
+		return fileService.getdalogfindname(pageable, name);
+	}
 
-
+	@GetMapping("/getdalogdate")
+	public Page<DA_LOG> getdalogdate(Pageable pageable,
+			@RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
+			@RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
+		return fileService.getdalogfindname(pageable, start, end);
+	}
 }
