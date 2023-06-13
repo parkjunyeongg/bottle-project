@@ -8,10 +8,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
+
+import org.springframework.data.jpa.domain.Specification;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +40,11 @@ import com.example.demo.persistence.DALogRepo;
 import com.example.demo.persistence.FileRepo;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 @Service
 public class FileService {
@@ -165,5 +173,24 @@ public class FileService {
 		pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("ID").descending());
 		return dalogRepo.findAll(pageable);
 	}
+
+	public Page<DA_LOG> getdalogfindname(Pageable pageable, String name) {
+		pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("ID").descending());
+		return dalogRepo.findByName(name, pageable);
+	}
+
+	public Page<DA_LOG> getdalogfindname(Pageable pageable, LocalDateTime start, LocalDateTime end) {
+		// TODO Auto-generated method stub
+		pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("ID").descending());
+		return dalogRepo.findBycreatedDateBetween(start, end, pageable);
+	}
+
+	public Page<DA_LOG> getdalogfindconfidence(Pageable pageable, String start, String end) {
+		// TODO Auto-generated method stub
+		pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("ID").descending());
+		return dalogRepo.findByconfidenceBetween(start, end, pageable);
+	}
+
+	
 
 }
