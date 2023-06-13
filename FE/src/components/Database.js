@@ -1,5 +1,6 @@
 import '../../src/css/database.css';
 import React, { useState, useEffect } from 'react';
+import DatePicker from "react-datepicker";
 
 const Database = () => {
     //로그 시간,위치 제일중요
@@ -13,47 +14,12 @@ const Database = () => {
     //const [pageSize, setPageSize] = useState(15);
     const [pageInfo, setPageInfo] = useState(0);
 
-    const [doSort, setDoSort] = useState(false);
-
     let pageSize = 15;
+    //let pageUrl = `http://bottle4.asuscomm.com:8080/getdalogpage?page=${pageNumber}&size=${pageSize}`
+    //fetch("http://10.125.121.221:8080/getdalog")
+    //fetch('http://bottle4.asuscomm.com:8080/getdalog') 
+
     
-
-   
-
-    useEffect(() => {  
-      if (doSort===false) {
-      const pageUrl = `http://bottle4.asuscomm.com:8080/getdalogpage?page=${pageNumber}&size=${pageSize} `
-      fetch(pageUrl)     
-      //fetch('http://bottle4.asuscomm.com:8080/getdalog')                            //db불러오기
-        //fetch("http://10.125.121.221:8080/getdalog")
-            .then(response => response.json())
-            .then(json => {
-              const { content, totalPages } = json; // 페이지에 띄울 데이터 배열과 총 페이지 수
-
-              const formattedData = content.map((item) => ({
-                ...item,
-                x_min: parseFloat(item.x_min).toFixed(0),
-                x_max: parseFloat(item.x_max).toFixed(0),
-                y_min: parseFloat(item.y_min).toFixed(0),
-                y_max: parseFloat(item.y_max).toFixed(0),
-                name: item.name,
-                confidence: (parseFloat(item.confidence) * 100).toFixed(0) + '%',
-                createdDate: new Date(item.createdDate).toLocaleString(undefined, {
-                  year: 'numeric',
-                  month: 'numeric',
-                  day: 'numeric',
-                  hour: 'numeric',
-                  minute: 'numeric',
-                  second: 'numeric',
-                }),
-                id: item.id,
-              }));
-
-              setData(formattedData);
-              setPageInfo({ totalPages });
-            })
-          }
-        }, [pageNumber, doSort, pageSize]);
 
 
 
@@ -138,32 +104,39 @@ const Database = () => {
           
 
           const [selectedOption, setSelectedOption] = useState('');                          //select 관리 
-          const [showAdditionalSelect, setShowAdditionalSelect] = useState(false);
+          const [showSortSelect, setShowSortSelect] = useState(false);
+          const [showDateSelect, setShowDateSelect] = useState(false);
           const [sortSelect, setSortSelect] = useState('');
 
-          const handleOptionChange = (event) => {           //첫번째 select
+          const handleOptionChange = (event) => {           //기본 select
             const selectedValue = event.target.value;
             setSelectedOption(selectedValue);
-            setShowAdditionalSelect(selectedValue === 'specificOption');
+            setShowSortSelect(selectedValue === 'specificOption');
+            setShowDateSelect(selectedValue === 'bottleDate')
+            
+          };
+          
+          const handle2OptionChange = (event) => {      //종유별 정렬 select
+            const selectedValue = event.target.value;
+            setSortSelect(selectedValue);
           };
 
-          const handleSortChange = (event) => {
-            const selectedValue = event.target.value;
-            setDoSort(true);
-            console.log(selectedValue);
-            setSortSelect(selectedValue);
-            setPageNumber(0)
+          useEffect(() => {                      //db불러오기
+            const getPageUrl = () => {
+              if (sortSelect === 'greenbottle') {
+                return `http://bottle4.asuscomm.com:8080/getdalogname?size=${pageSize}&name=green bottle&page=${pageNumber}`
+              } else if (sortSelect === 'borwnbottle') {
+                return `http://bottle4.asuscomm.com:8080/getdalogname?size=${pageSize}&name=brown bottle&page=${pageNumber}`;
+              } else if (sortSelect === 'clearbottle') {
+                return `http://bottle4.asuscomm.com:8080/getdalogname?size=${pageSize}&name=clear bottle&page=${pageNumber}`;
+              }
+              // 기본값으로 설정할 URL 반환
+              return `http://bottle4.asuscomm.com:8080/getdalogpage?page=${pageNumber}&size=${pageSize}`;
+            };
             
-            
-          }
-
-          useEffect(() => {
-            if (doSort===true) {
-            const pageUrl = `http://bottle4.asuscomm.com:8080/getdalogname?size=${pageSize}&name=${sortSelect}&page=${pageNumber}`
-            console.log(pageUrl);
-            fetch(pageUrl)
-            //fetch('http://bottle4.asuscomm.com:8080/getdalog')                            //db불러오기
-              //fetch("http://10.125.121.221:8080/getdalog")
+            const url = getPageUrl();  
+            console.log(url);
+            fetch(url)         
                   .then(response => response.json())
                   .then(json => {
                     const { content, totalPages } = json; // 페이지에 띄울 데이터 배열과 총 페이지 수
@@ -190,14 +163,18 @@ const Database = () => {
                     setData(formattedData);
                     setPageInfo({ totalPages });
                   })
-                  if (sortSelect==="") {
-                    setDoSort(false)
-                  } 
-                }
-          },[pageNumber, pageSize, sortSelect, doSort])
+                
+              }, [pageNumber, pageSize, sortSelect]);
+
+                const [startDate, setStartDate] = useState(new Date());
+                const ExampleCustomInput = ({ value, onClick }) => (
+                  <button className="example-custom-input" onClick={onClick}>
+                    {value}
+                  </button>
+                );
+              
 
     return(
-      
       <form className="dataform">
         <div className="datatable">
         <table>
@@ -277,16 +254,19 @@ const Database = () => {
             <option value="">정렬</option>
             <option value="confidence">인식률</option>
             <option value="specificOption">종류</option>
+            <option value="bottleDate">날짜</option>
         </select>
-        {showAdditionalSelect && (
-        <select value={sortSelect} onChange={handleSortChange}>
-          <option value=""></option>
-          <option value="glass" >glass</option>
-          <option value="plastic" >plastic</option>
+        {showSortSelect && (
+        <select value={sortSelect} onChange={handle2OptionChange}>
+          <option value="">선택</option>
+          <option value="greenbottle" >greenbottle</option>
+          <option value="borwnbottle" >borwnbottle</option>
+          <option value="clearbottle" >clearbottle</option>
         </select>
       )}
-        </div>
+      </div>
     </form>
+    
         );
     }
                 
