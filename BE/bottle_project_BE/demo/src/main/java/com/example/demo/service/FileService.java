@@ -179,10 +179,16 @@ public class FileService {
 		return dalogRepo.findByName(name, pageable);
 	}
 
-	public Page<DA_LOG> getdalogfindname(Pageable pageable, LocalDateTime start, LocalDateTime end) {
+	public Page<DA_LOG> getdalogfinddate(Pageable pageable, LocalDateTime start, LocalDateTime end) {
 		// TODO Auto-generated method stub
 		pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("ID").descending());
 		return dalogRepo.findBycreatedDateBetween(start, end, pageable);
+	}
+	
+	public Page<DA_LOG> getdalogfinddatename(Pageable pageable, LocalDateTime start, LocalDateTime end, String name) {
+		// TODO Auto-generated method stub
+		pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("ID").descending());
+		return dalogRepo.findByNameAndCreatedDateBetween(name, start, end, pageable);
 	}
 
 	public Page<DA_LOG> getdalogfindconfidence(Pageable pageable, String start, String end) {
