@@ -1,6 +1,7 @@
 import '../../src/css/database.css';
+import 'react-datepicker/dist/react-datepicker.css';
 import React, { useState, useEffect } from 'react';
-import DatePicker from "react-datepicker";
+import DatePicker from 'react-datepicker';
 
 const Database = () => {
     //로그 시간,위치 제일중요
@@ -106,14 +107,18 @@ const Database = () => {
           const [selectedOption, setSelectedOption] = useState('');                          //select 관리 
           const [showSortSelect, setShowSortSelect] = useState(false);
           const [showDateSelect, setShowDateSelect] = useState(false);
+          const [showConfidence, setShowConfidence] = useState(false);
           const [sortSelect, setSortSelect] = useState('');
+
+          const [startDate, setStartDate] = useState(null); //date관리
+          const [endDate, setEndDate] = useState(null);
 
           const handleOptionChange = (event) => {           //기본 select
             const selectedValue = event.target.value;
             setSelectedOption(selectedValue);
             setShowSortSelect(selectedValue === 'specificOption');
             setShowDateSelect(selectedValue === 'bottleDate')
-            
+            setShowConfidence(selectedValue === 'ConfidenceOption');
           };
           
           const handle2OptionChange = (event) => {      //종유별 정렬 select
@@ -124,18 +129,19 @@ const Database = () => {
           useEffect(() => {                      //db불러오기
             const getPageUrl = () => {
               if (sortSelect === 'greenbottle') {
-                return `http://bottle4.asuscomm.com:8080/getdalogname?size=${pageSize}&name=green bottle&page=${pageNumber}`
-              } else if (sortSelect === 'borwnbottle') {
-                return `http://bottle4.asuscomm.com:8080/getdalogname?size=${pageSize}&name=brown bottle&page=${pageNumber}`;
+                return `http://bottle4.asuscomm.com:8080/getdalogname?size=${pageSize}&name=green_bottle&page=${pageNumber}`
+              } else if (sortSelect === 'brownbottle') {
+                return `http://bottle4.asuscomm.com:8080/getdalogname?size=${pageSize}&name=brown_bottle&page=${pageNumber}`;
               } else if (sortSelect === 'clearbottle') {
-                return `http://bottle4.asuscomm.com:8080/getdalogname?size=${pageSize}&name=clear bottle&page=${pageNumber}`;
-              }
+                return `http://bottle4.asuscomm.com:8080/getdalogname?size=${pageSize}&name=clear_bottle&page=${pageNumber}`;
+              } else if (sortSelect === 'date')
+                return `http://bottle4.asuscomm.com:8080/getdalogdate?start=${startDate.toLocaleDateString('en-CA')}T00:00:00&end=${endDate.toLocaleDateString('en-CA')}T23:59:59&size=${pageSize}&page=${pageNumber}`;
               // 기본값으로 설정할 URL 반환
               return `http://bottle4.asuscomm.com:8080/getdalogpage?page=${pageNumber}&size=${pageSize}`;
             };
             
             const url = getPageUrl();  
-            console.log(url);
+            //console.log(url);
             fetch(url)         
                   .then(response => response.json())
                   .then(json => {
@@ -164,15 +170,15 @@ const Database = () => {
                     setPageInfo({ totalPages });
                   })
                 
-              }, [pageNumber, pageSize, sortSelect]);
+              }, [pageNumber, pageSize, sortSelect, startDate, endDate]);
 
-                const [startDate, setStartDate] = useState(new Date());
-                const ExampleCustomInput = ({ value, onClick }) => (
-                  <button className="example-custom-input" onClick={onClick}>
-                    {value}
-                  </button>
-                );
               
+
+              const handleDateSearch = (event) => {
+                event.preventDefault();
+                setSortSelect("date");
+                setPageNumber(0);
+              }
 
     return(
       <form className="dataform">
@@ -252,22 +258,48 @@ const Database = () => {
       <div className="searchDiv">
         <select name="SortChoice" value={selectedOption} onChange={handleOptionChange}> 
             <option value="">정렬</option>
-            <option value="confidence">인식률</option>
+            <option value="ConfidenceOption">인식률</option>
             <option value="specificOption">종류</option>
             <option value="bottleDate">날짜</option>
         </select>
         {showSortSelect && (
         <select value={sortSelect} onChange={handle2OptionChange}>
           <option value="">선택</option>
-          <option value="greenbottle" >greenbottle</option>
-          <option value="borwnbottle" >borwnbottle</option>
-          <option value="clearbottle" >clearbottle</option>
+          <option value="greenbottle" >green bottle</option>
+          <option value="brownbottle" >brown bottle</option>
+          <option value="clearbottle" >clear bottle</option>
         </select>
       )}
+      {showDateSelect && (
+      <div>
+        <DatePicker
+          className="bottleDate"
+          selected={startDate}
+          shouldCloseOnSelect
+          minDate={new Date('2023-01-01')}
+          maxDate={new Date()}
+          startDate={startDate}
+          onChange={(date) => setStartDate(date)}
+          dateFormat="yyyy-MM-dd"
+        />
+        <DatePicker
+          className="bottleDate"
+          selected={endDate}
+          shouldCloseOnSelect
+          startDate={startDate}
+          endDate={endDate}
+          minDate={startDate}
+          maxDate={new Date()}
+          onChange={(date) => setEndDate(date)}
+          dateFormat="yyyy-MM-dd"
+        />
+        <button onClick={handleDateSearch}>검색</button>
       </div>
-    </form>
-    
-        );
-    }
+    )}
+
+      </div>
+    </form> 
+  );
+}
                 
     export default Database;

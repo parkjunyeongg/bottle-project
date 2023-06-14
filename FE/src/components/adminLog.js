@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
+import ApexCharts from 'apexcharts';
 
 const AdminLog = () => {
   const [data, setData] = useState([]);
@@ -49,8 +49,9 @@ const AdminLog = () => {
       });
       
       setData(formattedData);
+      createChart(formattedData);
       //setPageInfo({ totalPages });
-      setConfidenceData(formattedData.map((item) => parseFloat(item.confidence)));
+      //setConfidenceData(formattedData.map((item) => parseFloat(item.confidence)));
 
     };
     
@@ -59,6 +60,14 @@ const AdminLog = () => {
       socket.close();
     };
   }, [data]);
+
+  useEffect(() => {
+
+    fetch("http://bottle4.asuscomm.com:8080/getdalog")         
+      .then(response => response.json())
+      .then(json => setConfidenceData(json))
+
+    }, []);
 
   /*const handlePageChange = (newPageNumber) => {
     setExpandedRow(null);
@@ -139,15 +148,37 @@ const AdminLog = () => {
   /*const currentPageRangeStart = Math.floor(pageNumber / 10) * 10 + 1;
   const currentPageRangeEnd = currentPageRangeStart + 9;
   const isLastPageRange = currentPageRangeEnd >= pageInfo.totalPages;*/
+  useEffect(() => {
+
+    fetch("http://bottle4.asuscomm.com:8080/getdalog")         
+      .then(response => response.json())
+      .then(json => {
+          const formattedData = json.map(item => parseFloat(item.confidence) * 100);
+          setConfidenceData(formattedData);
+          createChart(formattedData);
+        });
+    }, []);
+
+    const createChart = (data) => {
+      const options = {
+        chart: {
+          type: 'line',
+        },
+        series: [
+          {
+            name: 'confidence',
+            data: data,
+          },
+        ],
+        xaxis: {
+          categories: data.map((_, index) => index + 1),
+        },
+      };
   
-  const graphData = {
-    datasets: [
-      {
-        label: 'Confidence',
-        data: confidenceData,
-      },
-    ],
-  };
+      const chart = new ApexCharts(document.getElementById('chart'), options);
+      chart.render();
+    };
+  
   
   return (
     <form className="dataform">
@@ -223,10 +254,7 @@ const AdminLog = () => {
     </div>
   )}*/}
 
-  <div className="visualization">
-     {/* 그래프 컴포넌트 */}
-     <Line data={graphData} />
-  </div>
+{/*<div id="chart" />*/}
 </form>
   );
 }
