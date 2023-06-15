@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import ApexCharts from 'apexcharts';
+import ChartComponent from './chartComponent';
+import DonutChartComponent from './donutChartComponent';
+
 
 const AdminLog = () => {
   const [data, setData] = useState([]);
-  const [confidenceData, setConfidenceData] = useState([]);
+  
   //const [pageInfo, setPageInfo] = useState(0);
 
     const [expandedRow, setExpandedRow] = useState(null); //표 확장 확인 state
@@ -49,10 +51,7 @@ const AdminLog = () => {
       });
       
       setData(formattedData);
-      createChart(formattedData);
       //setPageInfo({ totalPages });
-      //setConfidenceData(formattedData.map((item) => parseFloat(item.confidence)));
-
     };
     
     // 컴포넌트 언마운트 시 웹소켓 연결 종료
@@ -61,13 +60,6 @@ const AdminLog = () => {
     };
   }, [data]);
 
-  useEffect(() => {
-
-    fetch("http://bottle4.asuscomm.com:8080/getdalog")         
-      .then(response => response.json())
-      .then(json => setConfidenceData(json))
-
-    }, []);
 
   /*const handlePageChange = (newPageNumber) => {
     setExpandedRow(null);
@@ -148,36 +140,7 @@ const AdminLog = () => {
   /*const currentPageRangeStart = Math.floor(pageNumber / 10) * 10 + 1;
   const currentPageRangeEnd = currentPageRangeStart + 9;
   const isLastPageRange = currentPageRangeEnd >= pageInfo.totalPages;*/
-  useEffect(() => {
-
-    fetch("http://bottle4.asuscomm.com:8080/getdalog")         
-      .then(response => response.json())
-      .then(json => {
-          const formattedData = json.map(item => parseFloat(item.confidence) * 100);
-          setConfidenceData(formattedData);
-          createChart(formattedData);
-        });
-    }, []);
-
-    const createChart = (data) => {
-      const options = {
-        chart: {
-          type: 'line',
-        },
-        series: [
-          {
-            name: 'confidence',
-            data: data,
-          },
-        ],
-        xaxis: {
-          categories: data.map((_, index) => index + 1),
-        },
-      };
   
-      const chart = new ApexCharts(document.getElementById('chart'), options);
-      chart.render();
-    };
   
   
   return (
@@ -254,7 +217,8 @@ const AdminLog = () => {
     </div>
   )}*/}
 
-{/*<div id="chart" />*/}
+  <ChartComponent />
+  <DonutChartComponent />
 </form>
   );
 }

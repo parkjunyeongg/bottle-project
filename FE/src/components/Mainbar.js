@@ -5,8 +5,8 @@ import { useState, useEffect } from 'react';
 
 const Mainbar =() => {
     const [isFormSize, setFormSize] =useState(47); //Mainbar form 크기 state
-
     const [isSignOpacity, setSignOpacity] = useState(0);
+
     const [showNav, setShowNav] = useState(false);
     const movePage = useNavigate();
 
@@ -77,7 +77,6 @@ const Mainbar =() => {
 
 return(
     <>
-      
     <div className="top-bar" style={{height: `${isFormSize}px`}}>
         <p className="logogo" onClick={gohome}>Bottle-project</p>
         <div className="barmenu1">
