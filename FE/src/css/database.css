@@ -22,6 +22,7 @@ table {
   }
   
   td, th {
+    cursor: pointer;
     text-align: center;
     padding: 8px;
   }
@@ -75,9 +76,10 @@ table {
   }
 
   .bottleDate {
-    width: 200px;
-    height: 30px;
-    padding: 8px;
+    width: 100px;
+    height: 20px;
+    padding: 5px;
+    margin-right: -15px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -88,3 +90,24 @@ table {
     border-color: #80bdff;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
   }
+  
+  .searchDiv > select {
+    padding-right: 10px;
+    margin-right: 5px;
+    height: 30px;
+  }
+
+  .datepick {
+    display: flex;
+    
+  }
+
+  .searchButton {
+    cursor: pointer;
+    background-color: rgb(0, 128, 255);
+    color: white;
+    border: none;
+    width: 80px;
+  }
+
+ 

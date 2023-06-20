@@ -29,12 +29,12 @@ const Imgupload = () => {
 
             const formattedData = data.map((item) => ({  
                 ...item,
-                x_min: parseFloat(item.x_min).toFixed(3),
-                x_max: parseFloat(item.x_max).toFixed(3),
-                y_min: parseFloat(item.y_min).toFixed(3),
-                y_max: parseFloat(item.y_max).toFixed(3),
+                x_min: parseFloat(item.x_min).toFixed(0),
+                x_max: parseFloat(item.x_max).toFixed(0),
+                y_min: parseFloat(item.y_min).toFixed(0),
+                y_max: parseFloat(item.y_max).toFixed(0),
                 name : item.name,
-                confidence: (parseFloat(item.confidence) * 100).toFixed(3) + '%',
+                confidence: (parseFloat(item.confidence) * 100).toFixed(0) + '%',
                 createdDate: new Date(item.createdDate).toLocaleString(undefined, {
                   year: 'numeric',
                   month: 'numeric',
@@ -71,17 +71,14 @@ return(
     <>  
     
         <form className="imgup">
-            <h3>bottle identification system </h3>
+            <h1 className="title">Bottle identification system </h1>
             {!imageUp && <div className="imgspace">
                 <div className="textspace">
-                    <h3>유의사항</h3>
-                    <p>병 사진만 업로드 해주세요.</p>
+                    <h3>병 사진만 업로드 해주세요.</h3>
+                    <p>※모든 사진은 데이터베이스에 저장되오니, 개인적인 사진을 올리는것에 주의해주세요.</p>
                 </div>
-                {/*<div className="labelspace">
-                    <h3>label 추가</h3>
-                    <p>내용</p>
-                </div> */}
                 <div className="imgbutton">
+                    
                     <input type="file" id = "input-file" onChange={saveImgFile} style={{display: 'none'}} />
                     <label className="input-file-button" htmlFor="input-file" id = "loadbutton"> 사진 올리기 </label>
                 </div>
@@ -96,7 +93,7 @@ return(
                         <thead>
                             <tr>
                             <th>판별일</th>
-                            <th>이름</th>
+                            <th>종류</th>
                             <th>x_min</th>
                             <th>x_max</th>
                             <th>y_min</th>

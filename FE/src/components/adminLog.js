@@ -1,33 +1,32 @@
 import React, { useEffect, useState } from 'react';
+import '../../src/css/adminLog.css';
 import ChartComponent from './chartComponent';
 import DonutChartComponent from './donutChartComponent';
 
 
 const AdminLog = () => {
   const [data, setData] = useState([]);
-  
-  //const [pageInfo, setPageInfo] = useState(0);
 
-    const [expandedRow, setExpandedRow] = useState(null); //표 확장 확인 state
-    const [imageSrc, setImageSrc] = useState(''); //이미지 src state 
+  const [expandedRow, setExpandedRow] = useState(null); //표 확장 확인 state
+  const [imageSrc, setImageSrc] = useState(''); //이미지 src state 
 
-    //const [pageNumber, setPageNumber] = useState(0);
-    
-  
 
   useEffect(() => {
-    // 웹소켓 연결
-    const socket = new WebSocket('ws://bottle4.asuscomm.com:8080/websocket-endpoint'); // 웹소켓 서버 주소로 수정
-
-    // 웹소켓 메시지 수신 이벤트 핸들러
+    const socket = new WebSocket('ws://bottle4.asuscomm.com:8080/websocket-endpoint');
+  
     socket.onmessage = event => {
       const newLog = JSON.parse(event.data);
       
-      const { content, totalPages } = newLog;
-
+      let content;
+      if (newLog.hasOwnProperty('content')) {
+        content = newLog.content;
+      } else {
+        content = [newLog];
+      }
+  
       const formattedData = content.map((item) => {
-        const createdDate = new Date(...item.createdDate);
-      
+        const createdDate = new Date(item.createdDate[0], item.createdDate[1] - 1, item.createdDate[2], item.createdDate[3], item.createdDate[4], item.createdDate[5]);
+    
         const formattedDate = createdDate.toLocaleString(undefined, {
           year: 'numeric',
           month: 'numeric',
@@ -36,7 +35,7 @@ const AdminLog = () => {
           minute: 'numeric',
           second: 'numeric',
         });
-      
+    
         return {
           ...item,
           x_min: parseFloat(item.x_min).toFixed(0),
@@ -49,67 +48,14 @@ const AdminLog = () => {
           id: item.id,
         };
       });
-      
-      setData(formattedData);
-      //setPageInfo({ totalPages });
+  
+      setData(prevData => [...formattedData, ...prevData]);
     };
-    
-    // 컴포넌트 언마운트 시 웹소켓 연결 종료
+  
     return () => {
       socket.close();
     };
-  }, [data]);
-
-
-  /*const handlePageChange = (newPageNumber) => {
-    setExpandedRow(null);
-    setPageNumber(newPageNumber);
-  };
-  
-
-
-  const getPageNumbers = () => {
-    const pageNumbers = [];
-    const startPage = Math.floor(pageNumber / 10) * 10 + 1;
-    const endPage = Math.min(startPage + 9, pageInfo.totalPages);
-
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(i);
-    }
-
-    return pageNumbers;
-  };
-
-  const handlePreviousPage = (event) => {
-    event.preventDefault();
-    setExpandedRow(null);
-
-    const previousPage = Math.floor((pageNumber) / 10) * 10;
-    if (previousPage > 0) {
-        setPageNumber(previousPage-1);
-      } else {
-        setPageNumber(0);
-    };
-  }
-
-  const handleNextPage = (event) => {
-    event.preventDefault();
-    setExpandedRow(null);
-  
-    // 현재 페이지 범위 계산
-    const currentPageRange = Math.floor((pageNumber ) / 10); // 현재 페이지 범위 (0부터 시작)
-    const maxPageRange = Math.floor((pageInfo.totalPages - 1) / 10); // 최대 페이지 범위
-  
-    if (currentPageRange < maxPageRange) {
-      // 다음 페이지 범위가 존재하는 경우
-      const nextPage = (currentPageRange + 1) * 10; // 다음 페이지 범위의 첫 페이지
-      setPageNumber(nextPage);
-    } else {
-      // 다음 페이지 범위가 없는 경우, 마지막 페이지로 이동
-      setPageNumber(pageInfo.totalPages - 1);
-    }
-  };*/
-
+  }, []);
 
     const handleRowClick = (index) => {         //행클릭시 확장되며 이미지 출력
       setImageSrc(null);
@@ -137,88 +83,62 @@ const AdminLog = () => {
       });
   };
 
-  /*const currentPageRangeStart = Math.floor(pageNumber / 10) * 10 + 1;
-  const currentPageRangeEnd = currentPageRangeStart + 9;
-  const isLastPageRange = currentPageRangeEnd >= pageInfo.totalPages;*/
-  
-  
   
   return (
-    <form className="dataform">
-      <h1>Log Display</h1>
-    <div className="datatable">
-    <table>
-      <thead>
-        <tr>
-            <th>작성일</th>
-            <th>작성자</th>
-            <th>종류</th>
-            <th>x_min</th>
-            <th>y_min</th>
-            <th>x_max</th>
-            <th>y_max</th>
-            <th>인식률</th>
-        </tr>
-      </thead>
-      <tbody>
-
-      {data.map((item, index) => ( 
-          <React.Fragment key={index}>
-            <tr onClick={() => handleRowClick(index)}>
-              <td>{item?.createdDate}</td>
-              <td>익명</td>
-              <td>{item?.name}</td>
-              <td>{item?.x_min}</td>
-              <td>{item?.y_min}</td>
-              <td>{item?.x_max}</td>
-              <td>{item?.y_max}</td>
-              <td>{item?.confidence}</td>
-            </tr>
-            {expandedRow === index && (
-              <tr className="expanded">
-                <td colSpan="8">
-                  <div className="expanded-row">
-                    <img src={imageSrc} alt={item?.id} style={{ maxWidth: '500px' }}/>
-                  </div>
-                </td>
+    <form className="adminform">  
+      <div className="admintable">
+        <h1 className="title">Log Display</h1>
+          <table>
+            <thead>
+              <tr>
+                  <th>작성일</th>
+                  <th>종류</th>
+                  <th>x_min</th>
+                  <th>y_min</th>
+                  <th>x_max</th>
+                  <th>y_max</th>
+                  <th>인식률</th>
               </tr>
-            )}
-          </React.Fragment>
-          ))}
-      </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
 
-{/* 페이징 UI */}
-{/*{pageInfo && (
-    <div className="pagebar">
-      {pageNumber > 9 && (
-        <button className="nextbutton" onClick={handlePreviousPage}>이전</button>
-      )}
+            {data.map((item, index) => ( 
+                <React.Fragment key={index}>
+                  <tr onClick={() => handleRowClick(index)}>
+                    <td>{item?.createdDate}</td>
+                    <td>{item?.name}</td>
+                    <td>{item?.x_min}</td>
+                    <td>{item?.y_min}</td>
+                    <td>{item?.x_max}</td>
+                    <td>{item?.y_max}</td>
+                    <td>{item?.confidence}</td>
+                  </tr>
+                  {expandedRow === index && (
+                    <tr className="expanded">
+                      <td colSpan="8">
+                        <div className="expanded-row">
+                          <img src={imageSrc} alt={item?.id} style={{ maxWidth: '500px' }}/>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
+                ))}
+            </tbody>
+          </table>
+  </div>
 
-      {getPageNumbers().map((page) => {
-      const buttonClasses = pageNumber === page - 1 ? "active-button" : "inactive-button";
-
-      return (
-        <button
-          key={page}
-          onClick={() => handlePageChange(page - 1)}
-          disabled={pageNumber === page - 1}
-          className={buttonClasses}
-        >
-          {page}
-        </button>
-      );
-    })}
-
-      {!isLastPageRange &&  (
-        <button className="nextbutton" onClick={handleNextPage}>다음</button>
-      )}
+  <div className="chartdiv">
+    <div className="chart">
+      <h1 className="title">Confidence Display</h1>
+      <ChartComponent />
     </div>
-  )}*/}
 
-  <ChartComponent />
-  <DonutChartComponent />
+    <div className="donut">
+      <h1 className="title">Type Display</h1>
+      <DonutChartComponent />
+    </div>
+  </div>
 </form>
   );
 }

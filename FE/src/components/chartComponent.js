@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import ApexCharts from 'apexcharts';
 
 const ChartComponent = () => {
-  //const [confidenceData, setConfidenceData] = useState([]);
 
   useEffect(() => {
     fetch("http://bottle4.asuscomm.com:8080/getdalog")
@@ -27,7 +26,9 @@ const ChartComponent = () => {
         },
       ],
       xaxis: {
+        type: 'category',
         categories: roundedData.map((_, index) => index + 1),
+        range: 30, // 초기에 보여줄 데이터 범위 (최근 50개)
       },
       yaxis: {
         labels: {
@@ -44,13 +45,14 @@ const ChartComponent = () => {
       },
   };
 
-    const chart = new ApexCharts(document.getElementById('chart'), options);
-    chart.render();
-  };
+  const chart = new ApexCharts(document.getElementById('chart'), options);
+  chart.render();
+};
 
   return (
   
-      <div id="chart" />
+    <div id="chart"/>
+
     
   );
 };

@@ -183,11 +183,11 @@ const Database = () => {
     return(
       <form className="dataform">
         <div className="datatable">
+          <h1 className="title">전체 이미지 인식 내역</h1>
         <table>
           <thead>
             <tr>
                 <th>작성일</th>
-                <th>작성자</th>
                 <th>종류</th>
                 <th>x_min</th>
                 <th>y_min</th>
@@ -202,7 +202,6 @@ const Database = () => {
               <React.Fragment key={index}>
                 <tr onClick={() => handleRowClick(index)}>
                   <td>{item?.createdDate}</td>
-                  <td>익명</td>
                   <td>{item?.name}</td>
                   <td>{item?.x_min}</td>
                   <td>{item?.y_min}</td>
@@ -256,46 +255,47 @@ const Database = () => {
         </div>
       )}
       <div className="searchDiv">
-        <select name="SortChoice" value={selectedOption} onChange={handleOptionChange}> 
+        <select className="selects" value={selectedOption} onChange={handleOptionChange}> 
             <option value="">정렬</option>
             <option value="ConfidenceOption">인식률</option>
             <option value="specificOption">종류</option>
             <option value="bottleDate">날짜</option>
         </select>
         {showSortSelect && (
-        <select value={sortSelect} onChange={handle2OptionChange}>
+        <select className="selects" value={sortSelect} onChange={handle2OptionChange}>
           <option value="">선택</option>
           <option value="greenbottle" >green bottle</option>
           <option value="brownbottle" >brown bottle</option>
           <option value="clearbottle" >clear bottle</option>
         </select>
-      )}
-      {showDateSelect && (
-      <div>
-        <DatePicker
-          className="bottleDate"
-          selected={startDate}
-          shouldCloseOnSelect
-          minDate={new Date('2023-01-01')}
-          maxDate={new Date()}
-          startDate={startDate}
-          onChange={(date) => setStartDate(date)}
-          dateFormat="yyyy-MM-dd"
-        />
-        <DatePicker
-          className="bottleDate"
-          selected={endDate}
-          shouldCloseOnSelect
-          startDate={startDate}
-          endDate={endDate}
-          minDate={startDate}
-          maxDate={new Date()}
-          onChange={(date) => setEndDate(date)}
-          dateFormat="yyyy-MM-dd"
-        />
-        <button onClick={handleDateSearch}>검색</button>
-      </div>
-    )}
+        )}
+      
+        {showDateSelect && (
+        <div className="datepick">
+          <DatePicker
+            className="bottleDate"
+            selected={startDate}
+            shouldCloseOnSelect
+            minDate={new Date('2023-01-01')}
+            maxDate={new Date()}
+            startDate={startDate}
+            onChange={(date) => setStartDate(date)}
+            dateFormat="yyyy-MM-dd"
+          />
+          <DatePicker
+            className="bottleDate"
+            selected={endDate}
+            shouldCloseOnSelect
+            startDate={startDate}
+            endDate={endDate}
+            minDate={startDate}
+            maxDate={new Date()}
+            onChange={(date) => setEndDate(date)}
+            dateFormat="yyyy-MM-dd"
+          />
+          <button className="searchButton" onClick={handleDateSearch}>검색</button>
+        </div>
+        )}
 
       </div>
     </form> 

@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
+.adminform {
+    display: flex;
+}
+
+.admintable {
+    box-sizing: border-box;
+    width: 50%;
+    
+   
+    margin: 100px 20px 20px 30px;
+    background: #ffffff;
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    padding: 40px ;
+    border-radius: 15px;
+
+
+}
+
+.chartdiv {
+    box-sizing: border-box;
+    width: 50%;
+
+    margin: 100px 20px 20px 30px;
+
+    background: #ffffff;
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    padding: 40px ;
+    border-radius: 15px;
+}

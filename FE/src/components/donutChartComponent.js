@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import ApexCharts from 'apexcharts';
 
 const DonutChartComponent = () => {
@@ -41,7 +41,7 @@ const DonutChartComponent = () => {
     chart.render();
   };
 
-  return <div id="donut-chart"></div>;
+  return <div id="donut-chart" />
 };
 
 export default DonutChartComponent;

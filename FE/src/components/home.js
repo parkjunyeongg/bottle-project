@@ -16,10 +16,10 @@ return(
     <>
         <div className="home">
             <div className="project" >
-                <h1>빈 병 자원 순환 프로그램의<br/>
-                    빈 병 종류, 크기 및 파손 정도<br/>
-                    자동 판별 서비스의 제공입니다.</h1>
-                    <button className="startbutton" onClick={goLogin}> 시작 </button>
+                <h1>빈 병 자원 순환 프로그램.<br/>
+                    빈 병 종류를 자동으로<br/>
+                    판별하여 제공합니다.</h1>
+                    {/*<button className="startbutton" onClick={goLogin}> 시작 </button>*/}
             </div>
         </div>
         
