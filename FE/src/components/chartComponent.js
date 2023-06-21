@@ -1,7 +1,9 @@
-import { useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import ApexCharts from 'apexcharts';
 
 const ChartComponent = () => {
+  
+  const chartRef = useRef(null);
 
   useEffect(() => {
     fetch("http://bottle4.asuscomm.com:8080/getdalog")
@@ -45,8 +47,18 @@ const ChartComponent = () => {
       },
   };
 
-  const chart = new ApexCharts(document.getElementById('chart'), options);
-  chart.render();
+  
+  if (chartRef.current) {
+    chartRef.current.updateSeries([
+      {
+        name: 'Confidence',
+        data: roundedData,
+      },
+    ]);
+  } else {
+    chartRef.current = new ApexCharts(document.getElementById('chart'), options);
+    chartRef.current.render();
+  }
 };
 
   return (

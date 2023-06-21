@@ -1,14 +1,14 @@
 
 import '../../src/css/home.css';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 
 
 const Home = () => {
 
-    const movePage = useNavigate();
+    /*const movePage = useNavigate();
     const goLogin= () => {
         movePage('login');
-    }
+    }*/
 
 
 

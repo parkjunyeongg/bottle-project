@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
 .imgup {
     box-sizing: border-box;
-    width: 60%;
+    width: 900px;
     
     margin: 100px auto;
     background: #ffffff;
@@ -81,5 +81,5 @@
   
 
 .textspace {
-    padding-bottom: 200px;
+    padding-bottom: 400px;
 }

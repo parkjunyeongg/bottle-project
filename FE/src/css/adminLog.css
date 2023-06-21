@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
 .adminform {
     display: flex;
+    justify-content: center;
 }
 
 .admintable {
     box-sizing: border-box;
-    width: 50%;
+    width: 700px;
     
    
     margin: 100px 20px 20px 30px;
@@ -17,14 +18,28 @@
 
 }
 
-.chartdiv {
+.chart {
     box-sizing: border-box;
-    width: 50%;
+    width: 700px;
 
-    margin: 100px 20px 20px 30px;
+    margin: 100px 20px 20px;
 
     background: #ffffff;
     box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
     padding: 40px ;
+    padding-bottom: 0;
+    border-radius: 15px;
+}
+
+.donut {
+    box-sizing: border-box;
+    width: 700px;
+
+    margin: 20px 20px 20px;
+    
+    background: #ffffff;
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    padding: 40px ;
+    padding-bottom: 0;
     border-radius: 15px;
 }

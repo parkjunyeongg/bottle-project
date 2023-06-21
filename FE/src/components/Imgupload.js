@@ -1,5 +1,5 @@
 import '../../src/css/Imgupload.css';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 //import Webcam from "react-webcam"; //<Webcam/>
 
 const Imgupload = () => {
@@ -85,7 +85,7 @@ return(
             </div>}
                 {imageUp && <div className="imgdown">
                     <h3>판별 결과</h3>
-                    {imageSrc && (<img src={imageSrc} alt="병 이미지" style={{ maxWidth: '65%' }}/>)}
+                    {imageSrc && (<img src={imageSrc} alt="병 이미지" style={{ maxWidth: '65%' , maxHeight: '40vh'}}/>)}
                 <div className="bottleinfo">
                     {imageData == null && <div className="spinner"></div>}
                     {imageData !== null && Object.keys(imageData).length > 0 && (
