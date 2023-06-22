@@ -12,10 +12,10 @@ const Database = () => {
     const [imageSrc, setImageSrc] = useState(''); //이미지 src state 
 
     const [pageNumber, setPageNumber] = useState(0);
-    //const [pageSize, setPageSize] = useState(15);
+    const [pageSize, setPageSize] = useState(15);
     const [pageInfo, setPageInfo] = useState(0);
 
-    let pageSize = 15;
+    
     //let pageUrl = `http://bottle4.asuscomm.com:8080/getdalogpage?page=${pageNumber}&size=${pageSize}`
     //fetch("http://10.125.121.221:8080/getdalog")
     //fetch('http://bottle4.asuscomm.com:8080/getdalog') 
@@ -104,44 +104,39 @@ const Database = () => {
           const isLastPageRange = currentPageRangeEnd >= pageInfo.totalPages;
           
 
-          const [selectedOption, setSelectedOption] = useState('');                          //select 관리 
-          const [showSortSelect, setShowSortSelect] = useState(false);
+          const [selectedSortOption, setSelectedSortOption] = useState('');           //select 관리 
+          const [selectedSizeOption, setSelectedSizeOption] = useState('');
+          const [showSortSelect, setShowSortSelect] = useState('');
           const [showDateSelect, setShowDateSelect] = useState(false);
           const [showConfidence, setShowConfidence] = useState(false);
           const [sortSelect, setSortSelect] = useState('');
 
+
           const [startDate, setStartDate] = useState(null); //date관리
           const [endDate, setEndDate] = useState(null);
-
-          const handleOptionChange = (event) => {           //기본 select
-            const selectedValue = event.target.value;
-            setSelectedOption(selectedValue);
-            setShowSortSelect(selectedValue === 'specificOption');
-            setShowDateSelect(selectedValue === 'bottleDate')
-            setShowConfidence(selectedValue === 'ConfidenceOption');
-          };
           
-          const handle2OptionChange = (event) => {      //종유별 정렬 select
-            const selectedValue = event.target.value;
-            setSortSelect(selectedValue);
-          };
-
-          useEffect(() => {                      //db불러오기
-            const getPageUrl = () => {
-              if (sortSelect === 'greenbottle') {
-                return `http://bottle4.asuscomm.com:8080/getdalogname?size=${pageSize}&name=green_bottle&page=${pageNumber}`
-              } else if (sortSelect === 'brownbottle') {
-                return `http://bottle4.asuscomm.com:8080/getdalogname?size=${pageSize}&name=brown_bottle&page=${pageNumber}`;
-              } else if (sortSelect === 'clearbottle') {
-                return `http://bottle4.asuscomm.com:8080/getdalogname?size=${pageSize}&name=clear_bottle&page=${pageNumber}`;
-              } else if (sortSelect === 'date')
-                return `http://bottle4.asuscomm.com:8080/getdalogdate?start=${startDate.toLocaleDateString('en-CA')}T00:00:00&end=${endDate.toLocaleDateString('en-CA')}T23:59:59&size=${pageSize}&page=${pageNumber}`;
-              // 기본값으로 설정할 URL 반환
-              return `http://bottle4.asuscomm.com:8080/getdalogpage?page=${pageNumber}&size=${pageSize}`;
-            };
+          let url = `http://bottle4.asuscomm.com:8080/getdalogsearch?paga=${pageNumber}&size=${pageSize}${showSortSelect ? `&name=${showSortSelect}` : ''}${startDate ? `&startDate=${startDate.toLocaleDateString('en-CA')}T00:00:00` : ''}${endDate ? `&endDate=${endDate.toLocaleDateString('en-CA')}T23:59:59` : ''}`;
+          
+          const handlePageSizeChange = (e) => {
+            const selectedValue = e.target.value;
+            setPageSize(selectedValue);
+            setSelectedSizeOption(selectedValue);
+            console.log(pageSize)
+          }
+          
+          const handleSortOption = (event) => {
+            const value = event.target.innerText;
+            // value를 이용한 로직 작성
+            console.log(value); // 예시: 콘솔에 값 출력
+            setShowSortSelect(value)
             
-            const url = getPageUrl();  
-            //console.log(url);
+          }
+          /*let url =`http://bottle4.asuscomm.com:8080/getdalogsearch?paga=${pageNumber}&size=${pageSize}`
+          url=url+`&name=${pageSize}`*/
+         
+          
+          useEffect(() => {                      //db불러오기
+            console.log(url);
             fetch(url)         
                   .then(response => response.json())
                   .then(json => {
@@ -184,6 +179,75 @@ const Database = () => {
       <form className="dataform">
         <div className="datatable">
           <h1 className="title">전체 이미지 인식 내역</h1>
+  
+
+      <div className="buttonSort">
+        <div className="sort1">
+          <div className="sorth3">
+            <h3>종류</h3>
+          </div>
+          <div className="sortul">
+            <ul>
+              <li onClick={handleSortOption}>green_bottle</li>
+              <li onClick={handleSortOption}>brown_bottle</li>
+              <li onClick={handleSortOption}>clear_bottle</li>
+              <li>
+                <select className="selects" value={selectedSizeOption} onChange={handlePageSizeChange}> 
+                  <option value="15">15개씩</option>
+                  <option value="30">30개씩</option>
+                  <option value="50">50개씩</option>
+                  <option value="100">100개씩</option>
+               </select>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="sort1">
+          <div className="sorth3">
+            <h3>날짜</h3>
+          </div>
+          <div className="dateul">
+          <ul>
+              <li><DatePicker
+              className="bottleDate"
+              selected={startDate}
+              shouldCloseOnSelect
+              minDate={new Date('2023-01-01')}
+              maxDate={new Date()}
+              startDate={startDate}
+              onChange={(date) => setStartDate(date)}
+              dateFormat="yyyy-MM-dd"
+            /></li>
+              <li><DatePicker
+              className="bottleDate"
+              selected={endDate}
+              shouldCloseOnSelect
+              startDate={startDate}
+              endDate={endDate}
+              minDate={startDate}
+              maxDate={new Date()}
+              onChange={(date) => setEndDate(date)}
+              dateFormat="yyyy-MM-dd"
+            /></li>
+            </ul>
+            
+          </div>
+          
+        </div>
+        <div className="sort1">
+          <div className="sorth3">
+            <h3>인식률</h3>
+          </div>
+          <div className="sortul">
+            <ul>
+              <li>50%이상</li>
+              <li>70%이상</li>
+              <li>직접입력</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
         <table>
           <thead>
             <tr>
@@ -254,50 +318,6 @@ const Database = () => {
           )}
         </div>
       )}
-      <div className="searchDiv">
-        <select className="selects" value={selectedOption} onChange={handleOptionChange}> 
-            <option value="">정렬</option>
-            <option value="ConfidenceOption">인식률</option>
-            <option value="specificOption">종류</option>
-            <option value="bottleDate">날짜</option>
-        </select>
-        {showSortSelect && (
-        <select className="selects" value={sortSelect} onChange={handle2OptionChange}>
-          <option value="">선택</option>
-          <option value="greenbottle" >green bottle</option>
-          <option value="brownbottle" >brown bottle</option>
-          <option value="clearbottle" >clear bottle</option>
-        </select>
-        )}
-      
-        {showDateSelect && (
-        <div className="datepick">
-          <DatePicker
-            className="bottleDate"
-            selected={startDate}
-            shouldCloseOnSelect
-            minDate={new Date('2023-01-01')}
-            maxDate={new Date()}
-            startDate={startDate}
-            onChange={(date) => setStartDate(date)}
-            dateFormat="yyyy-MM-dd"
-          />
-          <DatePicker
-            className="bottleDate"
-            selected={endDate}
-            shouldCloseOnSelect
-            startDate={startDate}
-            endDate={endDate}
-            minDate={startDate}
-            maxDate={new Date()}
-            onChange={(date) => setEndDate(date)}
-            dateFormat="yyyy-MM-dd"
-          />
-          <button className="searchButton" onClick={handleDateSearch}>검색</button>
-        </div>
-        )}
-
-      </div>
     </form> 
   );
 }
