@@ -103,41 +103,113 @@ const Database = () => {
           const currentPageRangeEnd = currentPageRangeStart + 9;
           const isLastPageRange = currentPageRangeEnd >= pageInfo.totalPages;
           
+           
+          const [selectedSizeOption, setSelectedSizeOption] = useState(''); //select 관리 
 
-          const [selectedSortOption, setSelectedSortOption] = useState('');           //select 관리 
-          const [selectedSizeOption, setSelectedSizeOption] = useState('');
           const [showSortSelect, setShowSortSelect] = useState('');
-          const [showDateSelect, setShowDateSelect] = useState(false);
-          const [showConfidence, setShowConfidence] = useState(false);
-          const [sortSelect, setSortSelect] = useState('');
+          const [showSortSelect2, setShowSortSelect2] = useState('');
+          const [showSortSelect3, setShowSortSelect3] = useState('');
 
+          const [startConfidence, setStartConfidence] = useState('');
+          const [endConfidence, setEndConfidence] = useState('');
 
           const [startDate, setStartDate] = useState(null); //date관리
           const [endDate, setEndDate] = useState(null);
           
-          let url = `http://bottle4.asuscomm.com:8080/getdalogsearch?paga=${pageNumber}&size=${pageSize}${showSortSelect ? `&name=${showSortSelect}` : ''}${startDate ? `&startDate=${startDate.toLocaleDateString('en-CA')}T00:00:00` : ''}${endDate ? `&endDate=${endDate.toLocaleDateString('en-CA')}T23:59:59` : ''}`;
+          let fetchUrl = `http://bottle4.asuscomm.com:8080/getdalogsearch?page=${pageNumber}&size=${pageSize}${showSortSelect ? `&name1=${showSortSelect}` : ''}${showSortSelect2 ? `&name2=${showSortSelect2}` : ''}${showSortSelect3 ? `&name3=${showSortSelect3}` : ''}${startDate ? `&startDate=${startDate.toLocaleDateString('en-CA')}T00:00:00` : ''}${endDate ? `&endDate=${endDate.toLocaleDateString('en-CA')}T23:59:59` : ''}${startConfidence ? `&confidenceStart=${startConfidence}` : ''}${endConfidence ? `&confidenceEnd=${endConfidence}` : ''}`;
           
-          const handlePageSizeChange = (e) => {
+          const handlePageSizeChange = (e) => {       //pageSize변경
             const selectedValue = e.target.value;
             setPageSize(selectedValue);
             setSelectedSizeOption(selectedValue);
             console.log(pageSize)
           }
           
-          const handleSortOption = (event) => {
-            const value = event.target.innerText;
-            // value를 이용한 로직 작성
-            console.log(value); // 예시: 콘솔에 값 출력
-            setShowSortSelect(value)
-            
+          const [activeItem1, setActiveItem1] = useState(false);
+          const [activeItem2, setActiveItem2] = useState(false);
+          const [activeItem3, setActiveItem3] = useState(false);
+
+          const [greenOn, setGreenOn] = useState(false);
+          const [brownOn, setBrownOn] = useState(false);
+          const [clearOn, setClearOn] = useState(false);
+
+          const handleClick = (value) => {
+            if (!showSortSelect) {
+              setShowSortSelect(value);
+            } else if (showSortSelect === value) {
+              setShowSortSelect('');
+            } else if (!showSortSelect2) {
+              setShowSortSelect2(value);
+            } else if (showSortSelect2 === value) {
+              setShowSortSelect2('');
+            } else if (!showSortSelect3) {
+              setShowSortSelect3(value);
+            } else if (showSortSelect3 === value) {
+              setShowSortSelect3('');
+            }
+          };
+
+          /*const handleSortOption1 = () =>{
+            //const value = event.target.innerText;
+            if (activeItem1===false){
+              setActiveItem1(true)
+              setGreenOn(true)
+            } else {
+              setActiveItem1(false)
+              setGreenOn(false)
+            }
           }
-          /*let url =`http://bottle4.asuscomm.com:8080/getdalogsearch?paga=${pageNumber}&size=${pageSize}`
-          url=url+`&name=${pageSize}`*/
+          
+          const handleSortOption2 = () =>{
+            //const value = event.target.innerText;
+            if (activeItem2===false){
+              setActiveItem2(true)
+              setBrownOn(true)
+            } else {
+              setActiveItem2(false)
+              setBrownOn(false)
+            }
+          }
+
+          const handleSortOption3 = () =>{
+            //const value = event.target.innerText;
+            if (activeItem3===false){
+              setActiveItem3(true)
+              setClearOn(true)
+            } else {
+              setActiveItem3(false)
+              setClearOn(false)
+            }
+          }*/
+
+          
+          /*const handleSortOption = (event) => {
+            const value = event.target.innerText;
+          
+            if (value === showSortSelect) {
+              setShowSortSelect('');
+              setActiveItem('');
+            } else if (value === showSortSelect2) {
+              setShowSortSelect2('');
+              setActiveItem('');
+            } else {
+              if (!showSortSelect) {
+                setShowSortSelect(value);
+                setActiveItem(value);
+              } else if (!showSortSelect2) {
+                setShowSortSelect2(value);
+                setActiveItem(value);
+              } else {
+                setShowSortSelect2(value);
+                setActiveItem(value);
+              }
+            }
+          };*/
          
           
           useEffect(() => {                      //db불러오기
-            console.log(url);
-            fetch(url)         
+            console.log(fetchUrl);
+            fetch(fetchUrl)      
                   .then(response => response.json())
                   .then(json => {
                     const { content, totalPages } = json; // 페이지에 띄울 데이터 배열과 총 페이지 수
@@ -163,16 +235,33 @@ const Database = () => {
       
                     setData(formattedData);
                     setPageInfo({ totalPages });
+                    
                   })
                 
-              }, [pageNumber, pageSize, sortSelect, startDate, endDate]);
+              }, [fetchUrl, pageNumber, pageSize, showSortSelect, startDate, endDate]);
 
-              
+              useEffect(() => {
+                
 
-              const handleDateSearch = (event) => {
+              },[])
+
+              const handleDateClear = (event) => {
                 event.preventDefault();
-                setSortSelect("date");
-                setPageNumber(0);
+                setStartDate(null)
+                setEndDate(null)
+                setPageNumber(0)
+              }
+
+              const handleConfidence50Sort = () => {
+                setStartConfidence(0.5);
+                setEndConfidence(1.0);
+                
+              }
+
+              const handleConfidence70Sort = () => {
+                setStartConfidence(0.7);
+                setEndConfidence(1.0);
+                
               }
 
     return(
@@ -188,9 +277,9 @@ const Database = () => {
           </div>
           <div className="sortul">
             <ul>
-              <li onClick={handleSortOption}>green_bottle</li>
-              <li onClick={handleSortOption}>brown_bottle</li>
-              <li onClick={handleSortOption}>clear_bottle</li>
+              <li className={activeItem1 === true ? 'active' : ''} onClick={() => handleClick('green_bottle')}>green_bottle</li>
+              <li className={activeItem2 === true ? 'active' : ''} onClick={() => handleClick('brown_bottle')}>brown_bottle</li>
+              <li className={activeItem3 === true ? 'active' : ''} onClick={() => handleClick('clear_bottle')}>clear_bottle</li>
               <li>
                 <select className="selects" value={selectedSizeOption} onChange={handlePageSizeChange}> 
                   <option value="15">15개씩</option>
@@ -218,6 +307,7 @@ const Database = () => {
               onChange={(date) => setStartDate(date)}
               dateFormat="yyyy-MM-dd"
             /></li>
+            <li>~</li>
               <li><DatePicker
               className="bottleDate"
               selected={endDate}
@@ -229,6 +319,9 @@ const Database = () => {
               onChange={(date) => setEndDate(date)}
               dateFormat="yyyy-MM-dd"
             /></li>
+            <li>
+              <button onClick={handleDateClear}>초기화</button>
+            </li>
             </ul>
             
           </div>
@@ -240,9 +333,14 @@ const Database = () => {
           </div>
           <div className="sortul">
             <ul>
-              <li>50%이상</li>
-              <li>70%이상</li>
-              <li>직접입력</li>
+              <li onClick={handleConfidence50Sort}>50%이상</li>
+              <li onClick={handleConfidence70Sort}>70%이상</li>
+              <li>직접입력 : </li>
+              <li><input className="conInput" type="number"></input>%</li>
+              <li>~</li>
+              <li><input className="conInput" type="number"></input>%</li>
+              
+
             </ul>
           </div>
         </div>
