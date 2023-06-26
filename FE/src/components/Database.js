@@ -15,6 +15,7 @@ const Database = () => {
     const [pageSize, setPageSize] = useState(15);
     const [pageInfo, setPageInfo] = useState(0);
 
+
     
     //let pageUrl = `http://bottle4.asuscomm.com:8080/getdalogpage?page=${pageNumber}&size=${pageSize}`
     //fetch("http://10.125.121.221:8080/getdalog")
@@ -122,90 +123,10 @@ const Database = () => {
             const selectedValue = e.target.value;
             setPageSize(selectedValue);
             setSelectedSizeOption(selectedValue);
-            console.log(pageSize)
+            setPageNumber(0)
           }
           
-          const [activeItem1, setActiveItem1] = useState(false);
-          const [activeItem2, setActiveItem2] = useState(false);
-          const [activeItem3, setActiveItem3] = useState(false);
-
-          const [greenOn, setGreenOn] = useState(false);
-          const [brownOn, setBrownOn] = useState(false);
-          const [clearOn, setClearOn] = useState(false);
-
-          const handleClick = (value) => {
-            if (!showSortSelect) {
-              setShowSortSelect(value);
-            } else if (showSortSelect === value) {
-              setShowSortSelect('');
-            } else if (!showSortSelect2) {
-              setShowSortSelect2(value);
-            } else if (showSortSelect2 === value) {
-              setShowSortSelect2('');
-            } else if (!showSortSelect3) {
-              setShowSortSelect3(value);
-            } else if (showSortSelect3 === value) {
-              setShowSortSelect3('');
-            }
-          };
-
-          /*const handleSortOption1 = () =>{
-            //const value = event.target.innerText;
-            if (activeItem1===false){
-              setActiveItem1(true)
-              setGreenOn(true)
-            } else {
-              setActiveItem1(false)
-              setGreenOn(false)
-            }
-          }
           
-          const handleSortOption2 = () =>{
-            //const value = event.target.innerText;
-            if (activeItem2===false){
-              setActiveItem2(true)
-              setBrownOn(true)
-            } else {
-              setActiveItem2(false)
-              setBrownOn(false)
-            }
-          }
-
-          const handleSortOption3 = () =>{
-            //const value = event.target.innerText;
-            if (activeItem3===false){
-              setActiveItem3(true)
-              setClearOn(true)
-            } else {
-              setActiveItem3(false)
-              setClearOn(false)
-            }
-          }*/
-
-          
-          /*const handleSortOption = (event) => {
-            const value = event.target.innerText;
-          
-            if (value === showSortSelect) {
-              setShowSortSelect('');
-              setActiveItem('');
-            } else if (value === showSortSelect2) {
-              setShowSortSelect2('');
-              setActiveItem('');
-            } else {
-              if (!showSortSelect) {
-                setShowSortSelect(value);
-                setActiveItem(value);
-              } else if (!showSortSelect2) {
-                setShowSortSelect2(value);
-                setActiveItem(value);
-              } else {
-                setShowSortSelect2(value);
-                setActiveItem(value);
-              }
-            }
-          };*/
-         
           
           useEffect(() => {                      //db불러오기
             console.log(fetchUrl);
@@ -240,10 +161,61 @@ const Database = () => {
                 
               }, [fetchUrl, pageNumber, pageSize, showSortSelect, startDate, endDate]);
 
+              const [activeItem1, setActiveItem1] = useState(false);
+              const [activeItem2, setActiveItem2] = useState(false);
+              const [activeItem3, setActiveItem3] = useState(false);
+    
+              const handleClick = (value) => {
+                if (!showSortSelect) {
+                  setShowSortSelect(value);
+                } else if (showSortSelect === value) {
+                  setShowSortSelect('');
+                } else if (!showSortSelect2) {
+                  setShowSortSelect2(value);
+                } else if (showSortSelect2 === value) {
+                  setShowSortSelect2('');
+                } else if (!showSortSelect3) {
+                  setShowSortSelect3(value);
+                } else if (showSortSelect3 === value) {
+                  setShowSortSelect3('');
+                }
+              };
+    
               useEffect(() => {
-                
-
-              },[])
+                if (!showSortSelect && showSortSelect2) {
+                  setShowSortSelect(showSortSelect2);
+                  setShowSortSelect2(showSortSelect3);
+                  setShowSortSelect3('');
+                } else if (!showSortSelect2 && showSortSelect3) {
+                  setShowSortSelect2(showSortSelect3);
+                  setShowSortSelect3('');
+                }
+              }, [showSortSelect, showSortSelect2, showSortSelect3]);
+    
+              const handleSortOption1 = () =>{
+                if (activeItem1===false){
+                  setActiveItem1(true)
+                } else {
+                  setActiveItem1(false)
+                }
+              }
+              
+              const handleSortOption2 = () =>{
+                if (activeItem2===false){
+                  setActiveItem2(true)
+                } else {
+                  setActiveItem2(false)
+                }
+              }
+    
+              const handleSortOption3 = () =>{
+                if (activeItem3===false){
+                  setActiveItem3(true)
+                } else {
+                  setActiveItem3(false)
+                }
+              }
+             
 
               const handleDateClear = (event) => {
                 event.preventDefault();
@@ -252,17 +224,57 @@ const Database = () => {
                 setPageNumber(0)
               }
 
+              const [sort50, setSort50] = useState(false);
+              const [sort70, setSort70] = useState(false);
+              const [prevStartConfidence, setPrevStartConfidence] = useState('');
+              const [prevEndConfidence, setPrevEndConfidence] = useState('');
+ 
               const handleConfidence50Sort = () => {
+                if (sort50 === false) {
+                setSort70(false)
+                setSort50(true);
+                setPrevStartConfidence('')
+                setPrevEndConfidence('')
                 setStartConfidence(0.5);
                 setEndConfidence(1.0);
+                } else {
+                  setSort50(false);
+                  setStartConfidence(null);
+                  setEndConfidence(null);
+                }
+                
                 
               }
 
               const handleConfidence70Sort = () => {
-                setStartConfidence(0.7);
-                setEndConfidence(1.0);
-                
+                if (sort70 === false) {
+                  setSort50(false)
+                  setSort70(true);
+                  setPrevStartConfidence('')
+                  setPrevEndConfidence('')
+                  setStartConfidence(0.7);
+                  setEndConfidence(1.0);
+                } else {
+                  setSort70(false);
+                  setStartConfidence(null);
+                  setEndConfidence(null);
+                }
               }
+              
+              const handleStartConfidence = (e) => {
+                setPrevStartConfidence(e.target.value)
+                setSort50(false);
+                setSort70(false);
+                setStartConfidence(prevStartConfidence/10);
+              }
+              
+              const handleEndConfidence = (e) => {
+                setPrevEndConfidence(e.target.value)
+                setSort50(false);
+                setSort70(false);
+                setEndConfidence(prevEndConfidence/10);
+              }
+              
 
     return(
       <form className="dataform">
@@ -277,9 +289,20 @@ const Database = () => {
           </div>
           <div className="sortul">
             <ul>
-              <li className={activeItem1 === true ? 'active' : ''} onClick={() => handleClick('green_bottle')}>green_bottle</li>
-              <li className={activeItem2 === true ? 'active' : ''} onClick={() => handleClick('brown_bottle')}>brown_bottle</li>
-              <li className={activeItem3 === true ? 'active' : ''} onClick={() => handleClick('clear_bottle')}>clear_bottle</li>
+              <li className={activeItem1 === true ? 'active' : ''} 
+              onClick={() => 
+                {handleClick('green_bottle')
+                handleSortOption1()}}>green_bottle</li>
+
+              <li className={activeItem2 === true ? 'active' : ''} 
+              onClick={() => 
+                {handleClick('brown_bottle')
+                handleSortOption2()}}>brown_bottle</li>
+
+              <li className={activeItem3 === true ? 'active' : ''} 
+              onClick={() => 
+                {handleClick('clear_bottle')
+                handleSortOption3()}}>clear_bottle</li>
               <li>
                 <select className="selects" value={selectedSizeOption} onChange={handlePageSizeChange}> 
                   <option value="15">15개씩</option>
@@ -333,18 +356,18 @@ const Database = () => {
           </div>
           <div className="sortul">
             <ul>
-              <li onClick={handleConfidence50Sort}>50%이상</li>
-              <li onClick={handleConfidence70Sort}>70%이상</li>
+              <li className={sort50 === true ? 'active' : ''} onClick={handleConfidence50Sort}>50%이상</li>
+              <li className={sort70 === true ? 'active' : ''}onClick={handleConfidence70Sort}>70%이상</li>
               <li>직접입력 : </li>
-              <li><input className="conInput" type="number"></input>%</li>
+              <li><input className="conInput" type="number" value={prevStartConfidence} onChange={handleStartConfidence}></input>%</li>
               <li>~</li>
-              <li><input className="conInput" type="number"></input>%</li>
+              <li><input className="conInput" type="number" value={prevEndConfidence}onChange={handleEndConfidence}></input>%</li>
               
 
             </ul>
           </div>
         </div>
-
+        
       </div>
         <table>
           <thead>
@@ -416,6 +439,7 @@ const Database = () => {
           )}
         </div>
       )}
+      
     </form> 
   );
 }

@@ -73,17 +73,19 @@ const Mainbar =() => {
         };
       }, );
 
-    
+    const [isGoImg, setGoImg] = useState(false)
+    const [isGoData, setGoData] = useState(false)
+    const [isGoManager, setGoManager] = useState(false)
 
 return(
     <>
     <div className="top-bar" style={{height: `${isFormSize}px`}}>
         <p className="logogo" onClick={gohome}>Bottle-project</p>
         <div className="barmenu1">
-            <button onClick={goImg}> 이미지 업로드 </button>
-            <button onClick={goData}> 전체 이미지 인식 내역 </button>
+            <button className={isGoImg === true ? 'barActive' : ''} onClick={goImg}> 이미지 업로드 </button>
+            <button className={isGoData === true ? 'barActive' : ''} onClick={goData}> 전체 이미지 인식 내역 </button>
             {/*<button onClick={goMy}> 나의 내역 </button>*/}
-            <button onClick={goManager}> 관리자 </button>
+            <button className={isGoManager === true ? 'barActive' : ''} onClick={goManager}> 관리자 </button>
         </div>
         <div className={`hidenav ${showNav ? 'visible' : 'hidden'}`} style={{ opacity :`${isSignOpacity}`}}>
             <button onClick={goImg}> 이미지 업로드</button>

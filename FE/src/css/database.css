@@ -148,6 +148,7 @@ li.active {
     text-align: center;
 }
  .sortul {
+    cursor: pointer;
     padding-left: 5px;
     display: flex;
  }
