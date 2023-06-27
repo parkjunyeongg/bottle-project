@@ -92,6 +92,7 @@ const AdminLog = () => {
           <table>
             <thead>
               <tr>
+                  <th>ID</th>
                   <th>작성일</th>
                   <th>종류</th>
                   <th>x_min</th>
@@ -106,6 +107,7 @@ const AdminLog = () => {
             {data.map((item, index) => ( 
                 <React.Fragment key={index}>
                   <tr onClick={() => handleRowClick(index)}>
+                    <td>{item?.id}</td>
                     <td>{item?.createdDate}</td>
                     <td>{item?.name}</td>
                     <td>{item?.x_min}</td>

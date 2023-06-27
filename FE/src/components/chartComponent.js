@@ -9,14 +9,17 @@ const ChartComponent = () => {
     fetch("http://bottle4.asuscomm.com:8080/getdalog")
       .then(response => response.json())
       .then(json => {
-        const formattedData = json.map(item => parseFloat(item.confidence) * 100);
+        const formattedData = json.map(item => ({
+          id: item.id,
+          confidence: parseFloat(item.confidence) * 100
+        }));
         createChart(formattedData);
       });
   }, []);
 
   const createChart = (data) => {
-    const roundedData = data.map(item => Math.floor(item));
-
+    const roundedData = data.map(item => Math.floor(item.confidence));
+  
     const options = {
       chart: {
         type: 'line',
@@ -28,9 +31,9 @@ const ChartComponent = () => {
         },
       ],
       xaxis: {
-        type: 'category',
-        categories: roundedData.map((_, index) => index + 1),
-        range: 30, // 초기에 보여줄 데이터 범위 (최근 50개)
+        type: 'ID',
+        categories: data.map(item => item.id),
+        range: 30, // 초기에 보여줄 데이터 범위 (최근 30개)
       },
       yaxis: {
         labels: {
@@ -38,6 +41,7 @@ const ChartComponent = () => {
             return val + "%";
           },
         },
+        max: 100
       },
       dataLabels: {
         enabled: true,
@@ -45,21 +49,15 @@ const ChartComponent = () => {
           return val + "%";
         },
       },
-  };
-
+    };
   
-  if (chartRef.current) {
-    chartRef.current.updateSeries([
-      {
-        name: 'Confidence',
-        data: roundedData,
-      },
-    ]);
-  } else {
-    chartRef.current = new ApexCharts(document.getElementById('chart'), options);
-    chartRef.current.render();
-  }
-};
+    if (chartRef.current) {
+      chartRef.current.updateOptions(options);
+    } else {
+      chartRef.current = new ApexCharts(document.getElementById('chart'), options);
+      chartRef.current.render();
+    }
+  };
 
   return (
   

@@ -1,7 +1,6 @@
 import '../../src/css/Mainbar.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-
 
 const Mainbar =() => {
     const [isFormSize, setFormSize] =useState(47); //Mainbar form 크기 state
@@ -9,30 +8,33 @@ const Mainbar =() => {
 
     const [showNav, setShowNav] = useState(false);
     const movePage = useNavigate();
+    const location = useLocation();
 
     const gohome= () => {
         movePage('');
     }
     
-    const goImg = () =>  {
-        movePage('/imgupload');
-    }
-
     const goLogin = () =>  {
         movePage('/login');
+    }
+
+    const goImg = () =>  {
+        movePage('/imgupload');
     }
 
     const goData = () => {
         movePage('/database');
     }
     
-    const goMy = () => {
-        movePage('/mypage');
-    }
-
     const goManager = () => {
         movePage('/adminlog');
     }
+
+    /*const goMy = () => {
+        movePage('/mypage');
+    }*/
+
+   
 
     const handleShowNav = () => {
         if (isFormSize === 47) {
@@ -73,19 +75,15 @@ const Mainbar =() => {
         };
       }, );
 
-    const [isGoImg, setGoImg] = useState(false)
-    const [isGoData, setGoData] = useState(false)
-    const [isGoManager, setGoManager] = useState(false)
-
 return(
     <>
     <div className="top-bar" style={{height: `${isFormSize}px`}}>
         <p className="logogo" onClick={gohome}>Bottle-project</p>
         <div className="barmenu1">
-            <button className={isGoImg === true ? 'barActive' : ''} onClick={goImg}> 이미지 업로드 </button>
-            <button className={isGoData === true ? 'barActive' : ''} onClick={goData}> 전체 이미지 인식 내역 </button>
+            <button className={location.pathname === '/imgupload' ? 'barActive' :  'bardis'} onClick={goImg}> 이미지 업로드 </button>
+            <button className={location.pathname === '/database' ? 'barActive' :  'bardis'} onClick={goData}> 전체 이미지 인식 내역 </button>
             {/*<button onClick={goMy}> 나의 내역 </button>*/}
-            <button className={isGoManager === true ? 'barActive' : ''} onClick={goManager}> 관리자 </button>
+            <button className={location.pathname === '/adminlog' ? 'barActive' :  'bardis'} onClick={goManager}> 관리자 </button>
         </div>
         <div className={`hidenav ${showNav ? 'visible' : 'hidden'}`} style={{ opacity :`${isSignOpacity}`}}>
             <button onClick={goImg}> 이미지 업로드</button>

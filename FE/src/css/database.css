@@ -115,6 +115,7 @@ table {
 ul {
   list-style: none;
   margin: 10px;
+  padding-inline-start: 0px;
 }
 
 .dateul {
@@ -124,12 +125,25 @@ ul {
 li {
   display: list-item;
   float: left;
-  padding-right: 25px;
+  padding-right: 10px;
+  padding-left: 10px;
+  
+}
+
+.usemargin {
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 li.active {
-  background-color: #525f78;
+  background-color: rgb(0, 128, 255);
   color:white;
+  border-radius: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  
 }
 
  .sort1 {
@@ -149,11 +163,28 @@ li.active {
 }
  .sortul {
     cursor: pointer;
-    padding-left: 5px;
     display: flex;
  }
 
 .conInput{
   width: 45px;
   height: 0px;
+}
+
+.cursorNone {
+  cursor: default;
+}
+
+.clearbutton {
+  background-color: white;
+  border: none;
+}
+
+.clearbutton:hover {
+  cursor:pointer;
+  background-color: rgb(0, 128, 255);
+  color: white;
+
+  transition: background 0.5s ease-in-out,
+                color 0.5s ease-in-out;
 }

@@ -138,10 +138,14 @@
     padding-left: 50px;
     padding-right: 50px;
     border: none;
-    background-color: #ffffff;
+    
 
     transition: background 0.5s ease-in-out,
                 color 0.5s ease-in-out;
+}
+
+.bardis {
+  background-color: #ffffff;
 }
 
 .barmenu1 > button:hover {
@@ -149,4 +153,7 @@
     color: white
 }
 
-
+.barActive {
+  background-color: rgb(0, 128, 255);
+  color: white
+}

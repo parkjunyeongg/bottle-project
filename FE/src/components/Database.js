@@ -224,6 +224,17 @@ const Database = () => {
                 setPageNumber(0)
               }
 
+              const handleConfidenceClear = (event) => {
+                event.preventDefault();
+                setSort50(false);
+                setSort70(false);
+                setPrevStartConfidence('')
+                setPrevEndConfidence('')
+                setStartConfidence(null);
+                setEndDate(null);
+                setPageNumber(0);
+              }
+
               const [sort50, setSort50] = useState(false);
               const [sort70, setSort70] = useState(false);
               const [prevStartConfidence, setPrevStartConfidence] = useState('');
@@ -289,17 +300,17 @@ const Database = () => {
           </div>
           <div className="sortul">
             <ul>
-              <li className={activeItem1 === true ? 'active' : ''} 
+              <li className={activeItem1 === true ? 'active' : 'usemargin'} 
               onClick={() => 
                 {handleClick('green_bottle')
                 handleSortOption1()}}>green_bottle</li>
 
-              <li className={activeItem2 === true ? 'active' : ''} 
+              <li className={activeItem2 === true ? 'active' : 'usemargin'} 
               onClick={() => 
                 {handleClick('brown_bottle')
                 handleSortOption2()}}>brown_bottle</li>
 
-              <li className={activeItem3 === true ? 'active' : ''} 
+              <li className={activeItem3 === true ? 'active' : 'usemargin'} 
               onClick={() => 
                 {handleClick('clear_bottle')
                 handleSortOption3()}}>clear_bottle</li>
@@ -330,7 +341,7 @@ const Database = () => {
               onChange={(date) => setStartDate(date)}
               dateFormat="yyyy-MM-dd"
             /></li>
-            <li>~</li>
+            <li className="cursorNone">~</li>
               <li><DatePicker
               className="bottleDate"
               selected={endDate}
@@ -343,7 +354,7 @@ const Database = () => {
               dateFormat="yyyy-MM-dd"
             /></li>
             <li>
-              <button onClick={handleDateClear}>초기화</button>
+              <button className="clearbutton" onClick={handleDateClear}>초기화</button>
             </li>
             </ul>
             
@@ -356,13 +367,13 @@ const Database = () => {
           </div>
           <div className="sortul">
             <ul>
-              <li className={sort50 === true ? 'active' : ''} onClick={handleConfidence50Sort}>50%이상</li>
-              <li className={sort70 === true ? 'active' : ''}onClick={handleConfidence70Sort}>70%이상</li>
-              <li>직접입력 : </li>
-              <li><input className="conInput" type="number" value={prevStartConfidence} onChange={handleStartConfidence}></input>%</li>
-              <li>~</li>
+              <li className={sort50 === true ? 'active' : 'usemargin'} onClick={handleConfidence50Sort}>50%이상</li>
+              <li className={sort70 === true ? 'active' : 'usemargin'}onClick={handleConfidence70Sort}>70%이상</li>
+              <li className="cursorNone">직접입력 : </li>
+              <li className="cursorNone"><input className="conInput" type="number" value={prevStartConfidence} onChange={handleStartConfidence}></input>%</li>
+              <li className="cursorNone">~</li>
               <li><input className="conInput" type="number" value={prevEndConfidence}onChange={handleEndConfidence}></input>%</li>
-              
+              <li><button className="clearbutton" onClick={handleConfidenceClear}>초기화</button></li>
 
             </ul>
           </div>
